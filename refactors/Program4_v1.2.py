@@ -21,7 +21,7 @@ INTRO_MSG: str = f"{'*' * 28}\n*{' ' * 4}Random Dice Roller{' ' * 4}*\n{'*' * 28
 # put data into a dataclass because im a simp for structs
 # could just use a dict if stuck on python lower than 3.7 but the syntax sucks more than @dataclass
 @dataclass
-class DiceStats:
+class DiceResults:
     die_1: int = 0
     die_2: int = 0
     sum_of_current_roll: int = 0
@@ -30,24 +30,23 @@ class DiceStats:
     average_from_rolls: float = 0.0
     goal: int = 12
 
-
-def roll_dice(stats: type[DiceStats]) -> None:
-    stats.die_1 = randint(1, 6)
-    stats.die_2 = randint(1, 6)
-    stats.sum_of_current_roll = stats.die_1 + stats.die_2
-    # increase index tracking the total number of rolls
-    stats.current_roll_count += 1
+    def roll_dice(self) -> None:
+        self.die_1 = randint(1, 6)
+        self.die_2 = randint(1, 6)
+        self.sum_of_current_roll = self.die_1 + self.die_2
+        # increase index tracking the total number of rolls
+        self.current_roll_count += 1
 
 
 def main() -> None:
     # print intro
     print(INTRO_MSG)
     # create instance of dataclass DiceStats
-    stats = DiceStats
+    stats = DiceResults()
 
     while stats.sum_of_current_roll != stats.goal:
         # Roll dice
-        roll_dice(stats)
+        stats.roll_dice()
         print(
             f"{stats.current_roll_count:2}.)  Dice: {stats.die_1} - {stats.die_2}  Total: {stats.sum_of_current_roll}",
         )
