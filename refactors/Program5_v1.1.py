@@ -15,54 +15,81 @@ from dataclasses import dataclass
 
 # put data into a struct so its much less confusing with free floating variables.
 @dataclass
-class AccountInterest:
-    principal: int
-    rate: int
-    years: int
-    interest: float
-    value: float
+class Account:
+    principal: int = 0
+    rate: int = 0
+    years: int = 0
+    interest: float = 0
+    total_value: float = 0
 
     # when in Rome do as the pythonistas do i guess
     def calc_interest(self) -> None:
         # Interest = (Principal x Rate x Time) then / 100 because we took rate % as an int
         self.interest = (self.principal * self.rate * self.years) / 100
 
+    def total_account(self) -> None:
+        from_input: tuple[int, int, int] | None = get_account_input()
+        if from_input is None:
+            return
+        self.principal, self.rate, self.years = from_input
+        self.calc_interest()
+        self.total_value = self.principal + self.interest
+
+    def display_results(self) -> None:
+        print(f"""
+        Total Interest Earned: ${self.interest:.2f}
+        Total Account Value:   ${self.total_value:.2f}
+        """)
+
+
+@dataclass
+class UserInputStrings:
+    principal_str: str
+    rate_str: str
+    years_str: str
+
+    def prompt_user(self) -> None:
+        print("""
+        Enter the interest rate entered as a percentage
+        (e.g., enters 6 for 6% interest)
+
+        and the number of years the money will be invested.
+        """)
+        self.principal_str = input("Enter the amount of money (principal) you will be investing: $")
+        if self.principal_str == "x":
+            return
+        self.rate_str = input("Enter the annual interest rate (a value of 5 = 5% annual interest): ")
+        self.years_str = input("Enter the whole number of years you will be investing: ")
+
+    def validate(self) -> bool:
+        if not self.principal_str.isdigit() or not self.rate_str.isdigit() or not self.years_str.isdigit():
+            print(
+                f"""
+            {"=" * 5}ERROR{"=" * 5}
+
+            One or multiple of
+            'principal: ({self.principal_str})',
+            'rate: ({self.rate_str})',
+            or 'years: ({self.years_str})'
+            are invalid.
+            {"=" * 25}
+            """,
+            )
+            return False
+        return True
+
 
 def menu() -> str | None:
     # print menu intro message
     print("**  Interest Value Calculator  **")
-    menu_choice: str = input(
-        "C: Calculate Interest\nD: Display Interest Information\nX: Exit\nUser Input: ",
-    )
+    choice: str = input("C: Calculate Interest\nD: Display Interest Information\nX: Exit\nUser Input: ")
 
-    valid: bool = menu_choice.lower() in ("c", "d", "x")
+    valid: bool = choice.lower() in ("c", "d", "x")
     if not valid:
-        print(f"\n{menu_choice.upper()} is not a valid option please reread the instructions\n")
+        print(f"\n{choice.upper()} is not a valid option please reread the instructions\n")
         return None
 
-    return menu_choice.lower()
-
-
-def CalcInterest(principal: int, rate: int, years: int) -> int:  # noqa: N802
-    return principal * rate * years
-
-
-def TotalAccount() -> tuple[float, float] | None:  # noqa: N802
-    from_input: tuple[int, int, int] | None = get_account_input()
-    if from_input is None:
-        return None
-    principal, rate, years = from_input
-    interest = CalcInterest(
-        principal,
-        rate,
-        years,
-    )
-    # divide interest by 100 because used integers for rate %
-    interest: float = interest / 100
-    # add interest to principal to get total
-    total_account: float = principal + interest
-
-    return interest, total_account
+    return choice.lower()
 
 
 # function to get interest rate and percentage from user and n number of years to invest
@@ -115,14 +142,8 @@ def DisplayInfo() -> None:  # noqa: N802
     """)
 
 
-def display_results(interest: float, total: float) -> None:
-    print(f"""
-    Total Interest Earned: ${interest:.2f}
-    Total Account Value:   ${total:.2f}
-    """)
-
-
 def main() -> None:
+    acc = Account()
     menu_choice: str = ""
     while menu_choice != "x":
         reply: str | None = menu()
@@ -132,12 +153,8 @@ def main() -> None:
         menu_choice = reply
 
         if menu_choice == "c":
-            from_total_account: tuple[float, float] | None = TotalAccount()
-            if from_total_account is None:
-                continue
-            interest, total = from_total_account
-
-            display_results(interest, total)
+            acc.total_account()
+            acc.display_results()
 
         elif menu_choice == "d":
             DisplayInfo()
