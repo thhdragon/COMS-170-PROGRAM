@@ -34,13 +34,9 @@ def main() -> None:
     # init variables to 0
     current_roll_count: int = 0
     total_roll_sum: int = 0
+    roll_total: int = 0
 
     # Roll dice
-    die_1, die_2, roll_total = roll_dice()
-    current_roll_count += 1
-    total_roll_sum += roll_total
-    print(f"{current_roll_count:2}.)  Dice: {die_1} - {die_2}  Total: {roll_total}")
-
     while roll_total != GOAL:
         die_1, die_2, roll_total = roll_dice()
         current_roll_count += 1
