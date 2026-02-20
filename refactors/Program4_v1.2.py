@@ -42,22 +42,22 @@ def main() -> None:
     # print intro
     print(INTRO_MSG)
     # create instance of dataclass DiceStats
-    stats = DiceResults()
+    results = DiceResults()
 
-    while stats.sum_of_current_roll != stats.goal:
+    while results.sum_of_current_roll != results.goal:
         # Roll dice
-        stats.roll_dice()
+        results.roll_dice()
         print(
-            f"{stats.current_roll_count:2}.)  Dice: {stats.die_1} - {stats.die_2}  Total: {stats.sum_of_current_roll}",
+            f"{results.current_roll_count:2}.)  Dice: {results.die_1} - {results.die_2}  Total: {results.sum_of_current_roll}",
         )
 
         # add the current roll to the running sum total
-        stats.sum_of_total_rolls += stats.sum_of_current_roll
+        results.sum_of_total_rolls += results.sum_of_current_roll
 
-    stats.average_from_rolls = stats.sum_of_total_rolls / stats.current_roll_count
+    results.average_from_rolls = results.sum_of_total_rolls / results.current_roll_count
     # sum of total rolls divided by amount of rolls
-    print(f"Rolls:   {stats.current_roll_count}")
-    print(f"Average: {stats.average_from_rolls:.2f}")
+    print(f"Rolls:   {results.current_roll_count}")
+    print(f"Average: {results.average_from_rolls:.2f}")
 
 
 main()
