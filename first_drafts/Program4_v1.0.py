@@ -36,21 +36,23 @@ def main() -> None:
     total_roll_sum: int = 0
 
     # Roll dice
-    current_roll: tuple[int, int, int] = roll_dice()
+    die_1, die_2, roll_total = roll_dice()
     current_roll_count += 1
-    total_roll_sum += current_roll[2]
-    print(f"{current_roll_count:2}.)  Dice: {current_roll[0]} - {current_roll[1]}  Total: {current_roll[2]}")
+    total_roll_sum += roll_total
+    print(f"{current_roll_count:2}.)  Dice: {die_1} - {die_2}  Total: {roll_total}")
 
-    while current_roll[2] != GOAL:
-        current_roll = roll_dice()
+    while roll_total != GOAL:
+        die_1, die_2, roll_total = roll_dice()
         current_roll_count += 1
-        total_roll_sum += current_roll[2]
-        print(f"{current_roll_count:2}.)  Dice: {current_roll[0]} - {current_roll[1]}  Total: {current_roll[2]}")
+        total_roll_sum += roll_total
+        print(f"{current_roll_count:2}.)  Dice: {die_1} - {die_2}  Total: {roll_total}")
 
     average_of_total_roll_sum: float = total_roll_sum / current_roll_count
     print(f"Rolls:   {current_roll_count}")
     print(f"Average: {average_of_total_roll_sum:.2f}")
 
+
+main()
 
 # ----------------------------------------
 # Add Output of final program as Comments
