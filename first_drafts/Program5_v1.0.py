@@ -9,7 +9,7 @@
 # ------------------------------------------------------------------
 #
 # ------------------------------------------------------------------
-def menu() -> None | str:
+def menu() -> str | None:
     # print menu intro message
     print("**  Interest Value Calculator  **")
     menu_choice: str = input(
@@ -56,13 +56,10 @@ def get_account_input() -> tuple[int, int, int] | None:
     """)
 
     principal: str = input("Enter the amount of money (principal) you will be investing: $")
-
     # simple way to get back to the main menu
     if principal.lower() == "x":
         return None
-
     rate: str = input("Enter the annual interest rate (a value of 5 = 5% annual interest): ")
-
     years: str = input("Enter the whole number of years you will be investing: ")
 
     # validate input and retry if invalid
