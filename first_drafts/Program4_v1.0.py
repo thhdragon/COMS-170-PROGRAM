@@ -15,40 +15,29 @@ from random import randint
 
 # define magic number constants
 GOAL: int = 12
-
+# init variables to 0
+current_roll_count: int = 0
+sum_all_rolls: int = 0
+roll_total: int = 0
 # create intro
 INTRO_MSG: str = f"{'*' * 28}\n*{' ' * 4}Random Dice Roller{' ' * 4}*\n{'*' * 28}"
 
+# print intro
+print(INTRO_MSG)
 
-def roll_dice() -> tuple[int, int, int]:
+# Roll dice
+while roll_total != GOAL:
     die_1: int = randint(1, 6)
     die_2: int = randint(1, 6)
-    total: int = die_1 + die_2
-    return die_1, die_2, total
+    roll_total: int = die_1 + die_2
+    current_roll_count += 1
+    sum_all_rolls += roll_total
+    print(f"{current_roll_count:2}.)  Dice: {die_1} - {die_2}  Total: {roll_total}")
 
+average_of_roll_sum_total: float = sum_all_rolls / current_roll_count
+print(f"Rolls:   {current_roll_count}")
+print(f"Average: {average_of_roll_sum_total:.2f}")
 
-def main() -> None:
-    # print intro
-    print(INTRO_MSG)
-
-    # init variables to 0
-    current_roll_count: int = 0
-    total_roll_sum: int = 0
-    roll_total: int = 0
-
-    # Roll dice
-    while roll_total != GOAL:
-        die_1, die_2, roll_total = roll_dice()
-        current_roll_count += 1
-        total_roll_sum += roll_total
-        print(f"{current_roll_count:2}.)  Dice: {die_1} - {die_2}  Total: {roll_total}")
-
-    average_of_total_roll_sum: float = total_roll_sum / current_roll_count
-    print(f"Rolls:   {current_roll_count}")
-    print(f"Average: {average_of_total_roll_sum:.2f}")
-
-
-main()
 
 # ----------------------------------------
 # Add Output of final program as Comments
