@@ -45,8 +45,9 @@ def CalcInterest(principal: int, rate: int, years: int) -> int:
     return principal * rate * years
 
 
-# function to get interest rate and percentage from user and n number of years to invest
-def get_account_input() -> tuple[int, int, int] | None:
+# TotalAccount() ->type is tuple[float, float] or None. tuples are basically arrays
+# returns None if the user input was invalid
+def TotalAccount() -> tuple[float, float] | None:
     print(
         """
         Enter the interest rate entered as a percentage
@@ -66,7 +67,6 @@ def get_account_input() -> tuple[int, int, int] | None:
     )
     years: str = input("Enter the whole number of years you will be investing: ")
 
-    # validate input and retry if invalid
     if not principal.isdigit() or not rate.isdigit() or not years.isdigit():
         print(
             f"""
@@ -80,29 +80,17 @@ def get_account_input() -> tuple[int, int, int] | None:
             {"=" * 55}
             """,
         )
-        return get_account_input()
-
-    return int(principal), int(rate), int(years)
-
-
-# TotalAccount() ->type is tuple[float, float] or None. tuples are basically arrays
-# returns None if the user input was invalid
-def TotalAccount() -> tuple[float, float] | None:
-    # run the get_account_input function and assign the result to from_input
-    #
-    from_input: tuple[int, int, int] | None = get_account_input()
-    if from_input is None:
         return None
-    principal, rate, years = from_input
+
     interest = CalcInterest(
-        principal,
-        rate,
-        years,
+        int(principal),
+        int(rate),
+        int(years),
     )
     # divide interest by 100 because used integers for rate %
     interest: float = interest / 100
     # add interest to principal to get total
-    total_account: float = principal + interest
+    total_account: float = int(principal) + interest
 
     return interest, total_account
 
@@ -122,6 +110,7 @@ def DisplayInfo() -> None:  # noqa: N802
 
 
 def main() -> None:
+    # create an empty string for menu_choice so the while loop has something to check against
     menu_choice: str = ""
     while menu_choice != "x":
         reply: str | None = menu()
