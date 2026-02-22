@@ -6,11 +6,18 @@
 # Program simulates rolling a pair of 6-sided dice until a total of 12 is rolled,
 # prints roll number, value for each die, and total.
 # prints total number of rolls and average.
-# ------------------------------------------------------------------
-# Variable      Type        Purpose
-# ------------------------------------------------------------------
-#
-# ------------------------------------------------------------------
+# -----------------------------------------------------------------------------------
+# Variable                       Type        Purpose
+# -----------------------------------------------------------------------------------
+# GOAL                           int         constant for the goal total of 12
+# sum_of_current_roll            int         sum of the current roll (die 1 + die 2)
+# sum_of_all_rolls               int         sum of all roll results added together
+# current_roll_count             int         rolling counter to track roll count
+# INTRO_MSG                      str         intro message to print on startup
+# die_1                          int         value of dice 1
+# die_2                          int         value of dice 2
+# average_from_roll_sum_total    float       average from dividing sum of all rolls by roll count
+# -----------------------------------------------------------------------------------
 from random import randint
 
 # define magic number constants
@@ -46,7 +53,7 @@ while sum_of_current_roll != GOAL:
     # print out per roll results
     print(f"{current_roll_count:2}.)  Dice: {die_1} - {die_2}  Total: {sum_of_current_roll}")
 
-# after the loop condition becomes valid get the average from dividing sum of all rolls and roll count
+# after the loop condition becomes valid get the average from dividing sum of all rolls by roll count
 average_from_roll_sum_total: float = sum_of_all_rolls / current_roll_count
 print(f"Rolls:   {current_roll_count}")
 print(f"Average: {average_from_roll_sum_total:.2f}")
@@ -55,6 +62,38 @@ print(f"Average: {average_from_roll_sum_total:.2f}")
 # ----------------------------------------
 # Add Output of final program as Comments
 # ----------------------------------------
+
+# = RESTART: /home/tyler/Documents/MCC/COMS-170-PROGRAM/turn_in/Program4_v1.0.py
+# ****************************
+# *    Random Dice Roller    *
+# ****************************
+#  1.)  Dice: 3 - 4  Total: 7
+#  2.)  Dice: 5 - 2  Total: 7
+#  3.)  Dice: 6 - 4  Total: 10
+#  4.)  Dice: 5 - 3  Total: 8
+#  5.)  Dice: 2 - 3  Total: 5
+#  6.)  Dice: 4 - 2  Total: 6
+#  7.)  Dice: 1 - 4  Total: 5
+#  8.)  Dice: 5 - 6  Total: 11
+#  9.)  Dice: 5 - 2  Total: 7
+# 10.)  Dice: 5 - 3  Total: 8
+# 11.)  Dice: 4 - 6  Total: 10
+# 12.)  Dice: 1 - 4  Total: 5
+# 13.)  Dice: 3 - 5  Total: 8
+# 14.)  Dice: 4 - 4  Total: 8
+# 15.)  Dice: 6 - 1  Total: 7
+# 16.)  Dice: 1 - 6  Total: 7
+# 17.)  Dice: 1 - 4  Total: 5
+# 18.)  Dice: 4 - 6  Total: 10
+# 19.)  Dice: 6 - 4  Total: 10
+# 20.)  Dice: 5 - 6  Total: 11
+# 21.)  Dice: 2 - 4  Total: 6
+# 22.)  Dice: 3 - 2  Total: 5
+# 23.)  Dice: 4 - 1  Total: 5
+# 24.)  Dice: 3 - 3  Total: 6
+# 25.)  Dice: 6 - 6  Total: 12
+# Rolls:   25
+# Average: 7.56
 
 # --------------------------
 # Additional notes/comments
