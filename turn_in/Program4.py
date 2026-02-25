@@ -54,9 +54,9 @@ while sum_of_current_roll != GOAL:
     print(f"{current_roll_count:2}.)  Dice: {die_1} - {die_2}  Total: {sum_of_current_roll}")
 
 # after the loop condition becomes valid get the average from dividing sum of all rolls by roll count
-average_from_roll_sum_total: float = sum_of_all_rolls / current_roll_count
+average_from_totals: float = sum_of_all_rolls / current_roll_count
 print(f"Rolls:   {current_roll_count}")
-print(f"Average: {average_from_roll_sum_total:.2f}")
+print(f"Average: {average_from_totals:.2f}")
 
 
 # ----------------------------------------
