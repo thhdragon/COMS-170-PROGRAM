@@ -7,17 +7,19 @@
 # prints roll number, value for each die, and total.
 # prints total number of rolls and average.
 # -----------------------------------------------------------------------------------
-# Variable                       Type        Purpose
+# Variable                  Type        Purpose
 # -----------------------------------------------------------------------------------
-# GOAL                           int         constant for the goal total of 12
-# sum_of_current_roll            int         sum of the current roll (die 1 + die 2)
-# sum_of_all_rolls               int         sum of all roll results added together
-# current_roll_count             int         rolling counter to track roll count
-# INTRO_MSG                      str         intro message to print on startup
-# die_1                          int         value of dice 1
-# die_2                          int         value of dice 2
-# average_from_roll_sum_total    float       average from dividing sum of all rolls by roll count
+# GOAL                      int         constant for the goal total of 12
+# sum_of_current_roll       int         sum of the current roll (die 1 + die 2)
+# sum_of_all_rolls          int         sum of all roll results added together
+# current_roll_count        int         rolling counter to track roll count
+# INTRO_MSG                 str         intro message to print on startup
+# die_1                     int         value of dice 1
+# die_2                     int         value of dice 2
+# average_from_totals       float       average from dividing sum of all rolls by roll count
 # -----------------------------------------------------------------------------------
+
+# explicitly import randint from random to use it without needing dot notation `random.randint`
 from random import randint
 
 # define magic number constants
@@ -37,6 +39,7 @@ print(INTRO_MSG)
 # while die 1 + die 2 is not 12
 while sum_of_current_roll != GOAL:
     # use the randint method from the random module to get random values for die_1 and die_2
+    # imported randint directly so randint can be used without `random.randint`
     die_1: int = randint(1, 6)
     die_2: int = randint(1, 6)
 
