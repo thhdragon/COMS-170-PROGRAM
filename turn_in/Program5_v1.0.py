@@ -8,14 +8,25 @@
 # ------------------------------------------------------------------
 # Variable       Type        Purpose
 # ------------------------------------------------------------------
-#
+# principal      int         amount of money to invest. user input
+# rate           int         interest rate % as a whole number. user input
+# years          int         number of years to invest. user input
+# interest       float       amount of interest earned. calculated
+# total_account  float       total amount of money in the account. calculated
+# menu_choice    str         user input for menu choice
 # ------------------------------------------------------------------
 
+# CalcInterest that accepts three (3) parameters `principal`, `rate`, and `time.
+# The function returns a float which is the amount of interest earned (principal * rate * time)
+def CalcInterest(principal: int, rate: int, years: int) -> float:
+    # used integers input for rate % so divide interest by 100
+    # simple enough formula that it doesn't need an intermediary variable for the return
+    return (principal * rate * years) / 100
 
-def CalcInterest(principal: int, rate: int, years: int) -> int:
-    return principal * rate * years
 
-
+# TotalAccount accepts zero arguments, gets input from user about amount of money invested,
+# the interest rate, and the number of years to be invested.
+# returns two values (amount of interest earned and total amount of money in the account).
 def TotalAccount() -> tuple[float, float]:
     print("""
 Enter the interest rate entered as a percentage
@@ -38,9 +49,6 @@ and the number of years the money will be invested.
         years,
     )
 
-    # used integers input for rate % so divide interest by 100
-    interest: float = interest / 100
-
     # add interest to principal to get total
     total_account: float = principal + interest
 
@@ -48,6 +56,8 @@ and the number of years the money will be invested.
     return interest, total_account
 
 
+# DisplayInfo accepts zero arguments and returns zero values.
+# The function displays simple interest formula info.
 def DisplayInfo() -> None:
     print("""
 The simple interest formula is:
@@ -66,17 +76,19 @@ def main() -> None:
     # prime the loop so it doesn't fail on first iteration
     menu_choice = ""
     # loop until user enters x
-    while menu_choice.lower() != "x":
+    while menu_choice != "x":
         # get user input for menu choice
-        menu_choice: str = input("C: Calculate Interest\nD: Display Interest Information\nX: Exit\nUser Input: ")
-        if menu_choice.lower() in ("c", "d", "x"):
+        menu_choice: str = input(
+            "C: Calculate Interest\nD: Display Interest Information\nX: Exit\nUser Input: ",
+        ).lower()
+        if menu_choice in ("c", "d", "x"):
             # if menu_choice is "c" then calculate interest
             if menu_choice == "c":
                 # call TotalAccount(), destructure the tuple into interest and float
                 interest, total = TotalAccount()
 
                 # print the interest and total account value
-                print(f"Total Interest Earned: ${interest:.2f}\nTotal Account Value:   ${total:.2f}\n")
+                print(f"\nTotal Interest Earned: ${interest:.2f}\nTotal Account Value:   ${total:.2f}\n")
 
             # if menu_choice is "d" then display information
             elif menu_choice == "d":
