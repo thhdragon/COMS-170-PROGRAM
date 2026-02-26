@@ -16,25 +16,44 @@
 # menu_choice    str         user input for menu choice
 # ------------------------------------------------------------------
 
-# CalcInterest that accepts three (3) parameters `principal`, `rate`, and `time.
-# The function returns a float which is the amount of interest earned (principal * rate * time)
+
 def CalcInterest(principal: int, rate: int, years: int) -> float:
-    # used integers input for rate % so divide interest by 100
-    # simple enough formula that it doesn't need an intermediary variable for the return
+    """Calculate interest from user input.
+
+    Calculates interest by multiplying the principal, rate, and time. (interest = principal * rate * time)
+
+    Args:
+        principal (int): initial amount of money used to calculate interest.
+        rate (int): annual interest rate in percentage.
+        years (int): number of years used to calculate interest. called years to not shadow time module.
+
+    Returns:
+        float: the amount of interest earned. return is divided by 100 to convert from percentage to decimal
+
+    """
     return (principal * rate * years) / 100
 
 
-# TotalAccount accepts zero arguments, gets input from user about amount of money invested,
-# the interest rate, and the number of years to be invested.
-# returns two values (amount of interest earned and total amount of money in the account).
 def TotalAccount() -> tuple[float, float]:
+    """Prompts user for input sends to CalcInterest.
+
+    Prompts user for principal, rate, and years. Then passes values to CalcInterest.
+    Input strings are cast to integers and the input is assumed to be valid.
+
+    Args:
+        None
+
+    Returns:
+        tuple[float, float]: a tuple containing the interest earned and the total account value.
+        The first value is the interest earned and the second value is the total account value.
+
+    """
     print("""
 Enter the interest rate entered as a percentage
 (e.g., enters 6 for 6% interest)
 and the number of years the money will be invested.
 """)
 
-    # get user input for principal, rate, and years. assume user enters valid integers.
     # casting an input() string to int can fail with ValueError if the string isn't valid numbers.
     # this should go into a try/except block but KISS for now. Exceptions are next unit.
     # also assuming that principal is an integer not a float based on the test cases from the assignment pdf.
@@ -56,9 +75,8 @@ and the number of years the money will be invested.
     return interest, total_account
 
 
-# DisplayInfo accepts zero arguments and returns zero values.
-# The function displays simple interest formula info.
 def DisplayInfo() -> None:
+    """Provide information about the interest formula."""
     print("""
 The simple interest formula is:
 Interest = Principal x Rate x Time
@@ -69,6 +87,7 @@ The Time is the number of years the money will be invested for.
 
 
 def main() -> None:
+    """Display menu and handle user input."""
     # create menu_choice so the while loop has something to check against
     # print menu intro message
     print("**  Interest Value Calculator  **")
@@ -77,7 +96,7 @@ def main() -> None:
     menu_choice = ""
     # loop until user enters x
     while menu_choice != "x":
-        # get user input for menu choice
+        # get user input for menu choice. cast it to lower so we dont have to compare both cases
         menu_choice: str = input(
             "C: Calculate Interest\nD: Display Interest Information\nX: Exit\nUser Input: ",
         ).lower()
