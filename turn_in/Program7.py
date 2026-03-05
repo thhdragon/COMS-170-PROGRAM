@@ -29,10 +29,11 @@ def try_into_time(time_str: str) -> float | None:
                 print("Completion time can't be 0 or negative")
                 return None
             case not_finite if not isfinite(not_finite):
-                return None
                 print("Completion time must be a finite number")
+                return None
             case too_long if too_long > 999999.99:
                 print("if you take over 11 days you don't get on the list")
+                return None
             case _:
                 return time_float
 
