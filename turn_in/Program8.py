@@ -1,3 +1,19 @@
+# Tyler Hill
+# 0506760
+# Program 8
+# COMS-170-01: Winter 2026
+# Due: 05/06/26
+# Program description: takes a string of sentences and capitalizes the first letter of each sentence
+# --------------------------------------------------------------------------------
+# Variable          Type          Purpose
+# --------------------------------------------------------------------------------
+# final_as_list     list[str]     holds the final list of sentences
+# test_input        str           holds the test input
+# sentences         list[str]     holds the list of sentences
+# sentence          str           holds the current sentence
+# sentence_clean    str           holds the cleaned sentence
+# final_as_str      str           holds the final string
+# --------------------------------------------------------------------------------
 # An example of input is: my name is Samantha. i go to Mott Community College.
 # The output would be: My name is Samantha. I go to Mott Community College.
 
@@ -11,20 +27,24 @@
 # f. Program is saved as Program8.py
 
 
-final_as_list: list[str] = []
-test_input: str = "my name is Samantha. i go to Mott Community College."
-sentences: list[str] = test_input.split(".")
-for sentence in sentences:
-    sentence_clean: str = sentence
-    sentence_clean = sentence_clean.strip()
-    if not sentence_clean:
-        continue
-    else:
+def main() -> None:
+    final_as_list: list[str] = []
+    test_input: str = "my name is Samantha. i go to Mott Community College."
+    sentences: list[str] = test_input.split(".")
+
+    for sentence in sentences:
+        sentence_clean: str = sentence.strip()
+
+        if not sentence_clean:
+            continue
         final_as_list.append(sentence_clean[0].upper() + sentence_clean[1:])
 
-final_as_str: str = ". ".join(final_as_list)
+    final_as_str: str = ". ".join(final_as_list)
 
-if test_input.endswith("."):
-    print(f"{final_as_str}.")
-else:
-    print(final_as_str)
+    if test_input.endswith("."):
+        print(f"{final_as_str}.")
+    else:
+        print(final_as_str)
+
+
+main()

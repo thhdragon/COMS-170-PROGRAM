@@ -3,8 +3,8 @@
 # Program 6
 # COMS-170-01: Winter 2026
 # Due: 04/03/26
-# Program description: program displays the card sale prices to screen
-# calculate the average sale amount
+# Program description: displays the card sale prices from a text file to screen
+# and calculates the average sale amount
 # --------------------------------------------------------------------------------
 # Variable          Type          Purpose
 # --------------------------------------------------------------------------------
@@ -26,16 +26,16 @@ def CalcTotal() -> tuple[float, float] | None:
     and divides the total by the number of items in the file.
 
     Returns:
-        A tuple containing the grand total and the average sales amount, or None if an error occurs.
+        grand total and the average sales amount, or None if an error occurs.
 
     """
-    prices = 0.0
-    idx = 0
+    prices: float = 0.0
+    idx: int = 0
     try:
         with Path("cards.txt").open("r") as file:
             for line in file:
-                line_cleaned = line.rstrip()
-                price = float(line_cleaned)
+                line_cleaned: str = line.rstrip()
+                price: float = float(line_cleaned)
                 idx += 1
                 prices += price
 
@@ -46,7 +46,8 @@ def CalcTotal() -> tuple[float, float] | None:
         print(f"Error, check your file contents.\n{err}")
         return None
 
-    return prices, (prices / idx)
+    average: float = prices / idx
+    return prices, average
 
 
 def DisplayCardSales() -> None:
@@ -56,17 +57,17 @@ def DisplayCardSales() -> None:
     line number to the left starting at 1. Also handles file and value errors.
     """
     # sounded like you wanted this done manually instead of using enumerate() on a list
-    idx = 0
+    idx: int = 0
     try:
         with Path("cards.txt").open("r") as file:
             for line in file:
-                line_cleaned = line.rstrip()
-                price = float(line_cleaned)
+                line_cleaned: str = line.rstrip()
+                price: float = float(line_cleaned)
                 idx += 1
                 print(f"{idx}: ${price:.2f}")
 
     except FileNotFoundError as err:
-        print(err)
+        print(f"{err}: Ensure file is in the current working directory.")
         return
     except ValueError as err:
         print(f"Error, check your file contents.\n{err}")
@@ -83,7 +84,7 @@ def main() -> None:
 
     The menu is displayed until the user enters 'x' to exit the application.
     """
-    menu_selection = ""
+    menu_selection: str = ""
     while menu_selection != "x":
         print(
             "**********************\n* Pokemon Card Sales *\n**********************\n"
@@ -92,7 +93,7 @@ def main() -> None:
         menu_selection = input("Enter menu selection: ").lower()
 
         if menu_selection not in ("c", "d", "x"):
-            print(f"Pick a valid menu option. {menu_selection.upper()} is not an option")
+            print(f"Pick a valid menu option. '{menu_selection.upper()}' is not an option")
             continue
 
         if menu_selection == "c":
