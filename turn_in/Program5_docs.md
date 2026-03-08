@@ -1,3 +1,5 @@
+# Required Documentation for Program 5
+
 Pseudocode containing:
 a. A main function that displays a menu of choices. Menu choices are:
 C: Calculate Interest
@@ -21,6 +23,8 @@ d.
 A function named CalcInterest. This function accepts three (3) parameters named principal, rate,
 and time and returns one (1) value. The value returned is the amount of interest made based on
 those 3 values as calculated with the simple interest formula (I = Prt).
+
+## Pseudocode
 
 `# function CalcInterest takes principal: int, rate: int, time: int as arguments and returns the interest: float`
    `# calculate interest using the formula: interest = principal * rate * time / 100`
@@ -54,7 +58,7 @@ those 3 values as calculated with the simple interest formula (I = Prt).
        `# if menu_choice is not "c", "d", or "x"`
            `# print error message`
 
-# IPO charts
+## IPO charts
 
 **CalcInterest:**
 
