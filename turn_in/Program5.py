@@ -17,7 +17,7 @@
 # ----------------------------------------------------------------------------
 
 
-def CalcInterest(principal: int, rate: int, years: int) -> float:
+def CalcInterest(principal: int, rate: int, time: int) -> float:
     """Calculate interest from user input.
 
     Calculates interest by multiplying the principal, rate, and time.
@@ -26,20 +26,22 @@ def CalcInterest(principal: int, rate: int, years: int) -> float:
     Args:
         principal: initial amount of money used to calculate interest.
         rate: annual interest rate in percentage.
-        years: number of years used to calculate interest. called years to not shadow time module.
+        time: number of years used to calculate interest.
 
     Returns:
         Amount of interest earned. return is divided by 100 to convert from percentage to decimal
 
     """
-    interest: float = (principal * rate * years) / 100
+    # could easily just return the calculation directly but I'm trying to write this in the most
+    # self documenting way so added an intermediate variable
+    interest: float = (principal * rate * time) / 100
     return interest
 
 
 def TotalAccount() -> tuple[float, float]:
     """Prompt user for input sends to CalcInterest.
 
-    Prompts user for principal, rate, and years. Then passes values to CalcInterest.
+    Prompts user for principal, rate, and time. Then passes values to CalcInterest.
     Input() strings are cast to integers and the input is assumed to be valid.
 
     Returns:
@@ -53,14 +55,15 @@ def TotalAccount() -> tuple[float, float]:
         "and the number of years the money will be invested.\n",
     )
 
-    # casting an input() string to int can fail with ValueError if the string isn't valid numbers.
+    # casting an input() string to int will fail with ValueError if the string isn't valid numbers.
     # this should go into a try/except block but KISS for now. Exceptions are next unit.
     # also assuming that principal is an int not a float based on the test cases in the program pdf.
     principal = int(input("Enter the amount of money (principal) you will be investing: $"))
     rate = int(input("Enter the annual interest rate (a value of 5 = 5% annual interest): "))
     years = int(input("Enter the whole number of years you will be investing: "))
 
-    # calculate interest by passing 
+    # calculate interest by passing principal, rate, and years to CalcInterest() and storing the
+    # result in interest
     interest: float = CalcInterest(
         principal,
         rate,
