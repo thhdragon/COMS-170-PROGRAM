@@ -97,7 +97,7 @@ def main() -> None:
         print("**  Interest Value Calculator  **")
         # get user input for menu choice
         # cast it to lower so we dont have to compare both cases
-        msg = "C: Calculate Interest\nD: Display Interest Information\nX: Exit\nUser Input: "
+        msg = "C: Calculate Interest\nD: Display Interest Information\nX: Exit application\nUser Input: "
         menu_choice: str = input(msg).lower()
         if menu_choice in ("c", "d", "x"):  # validate input against menu options
             if menu_choice == "c":  # if menu_choice is "c"
