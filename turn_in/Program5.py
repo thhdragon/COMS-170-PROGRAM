@@ -32,7 +32,8 @@ def CalcInterest(principal: int, rate: int, years: int) -> float:
         Amount of interest earned. return is divided by 100 to convert from percentage to decimal
 
     """
-    return (principal * rate * years) / 100
+    interest: float = (principal * rate * years) / 100
+    return interest
 
 
 def TotalAccount() -> tuple[float, float]:
@@ -59,7 +60,7 @@ def TotalAccount() -> tuple[float, float]:
     rate = int(input("Enter the annual interest rate (a value of 5 = 5% annual interest): "))
     years = int(input("Enter the whole number of years you will be investing: "))
 
-    # calculate interest
+    # calculate interest by passing 
     interest: float = CalcInterest(
         principal,
         rate,
@@ -85,15 +86,16 @@ def DisplayInfo() -> None:
 
 def main() -> None:
     """Display menu and handle user input."""
-    menu_choice = ""  # prime the loop so it doesn't fail on first iteration
+    # initialize menu_choice to an empty string so the while loop runs at least once
+    menu_choice = ""
     # loop until user enters x
     while menu_choice != "x":
         # print menu intro message
         print("**  Interest Value Calculator  **")
         # get user input for menu choice
-        menu_choice: str = input(
-            "C: Calculate Interest\nD: Display Interest Information\nX: Exit\nUser Input: ",
-        ).lower()  # cast it to lower so we dont have to compare both cases
+        # cast it to lower so we dont have to compare both cases
+        msg = "C: Calculate Interest\nD: Display Interest Information\nX: Exit\nUser Input: "
+        menu_choice: str = input(msg).lower()
         if menu_choice in ("c", "d", "x"):  # validate input against menu options
             if menu_choice == "c":  # if menu_choice is "c"
                 # call TotalAccount(), store results into interest and total
@@ -105,15 +107,29 @@ def main() -> None:
                     f"Total Account Value:   ${total:.2f}\n",
                 )
 
-            # if menu_choice is "d" then display information
+            # if menu_choice is "d"
             elif menu_choice == "d":
+                # display information by calling DisplayInfo()
                 DisplayInfo()
+
+            # if menu_choice is "x"
+            elif menu_choice == "x":
+                # print quit message
+                print("\nHAL 9000: Daisy..Daisy..give me your answer do...")
+
+        # if menu_choice is not "c", "d", or "x"
+        else:
+            # print error message
+            # would probably put a continue here if there were more code under it
+            print(f"Pick a valid menu option. '{menu_choice.upper()}' is not an option")
 
 
 main()
 
 # =========Comments/Explanation of code from outside the lectures=========
-# I was originally using the program requirements from the assignment PDF as as comments on the functions.
-# they were basically documenting the functions so I figured why not just practice putting the information in docstrings
-# I used the google style guide for python for the docstrings.
+# I was using the program reqs from the assignment PDF as as comments to
+# document the functions but they were basically everything that goes into a
+# docstring so I figured why not just practice putting the information in actual
+# docstrings instead of comments. I used the google style guide for python for
+# the docstrings.
 # https://google.github.io/styleguide/pyguide.html#383-functions-and-methods
