@@ -13,7 +13,7 @@
 # years          int         number of years to invest. user input
 # interest       float       amount of interest earned. calculated
 # total_account  float       total amount of money in the account. calculated
-# menu_choice    str         user input for menu choice
+# menu_choice    str         user input for menu choices
 # ----------------------------------------------------------------------------
 
 
@@ -100,11 +100,12 @@ def main() -> None:
         msg = "C: Calculate Interest\nD: Display Interest Information\nX: Exit application\nUser Input: "
         menu_choice: str = input(msg).lower()
         if menu_choice in ("c", "d", "x"):  # validate input against menu options
+            # match would be cleaner here but we haven't covered it yet and its only python 3.10+ anyways
             if menu_choice == "c":  # if menu_choice is "c"
                 # call TotalAccount(), store results into interest and total
                 interest, total = TotalAccount()
 
-                # print the interest and total account value
+                # print the interest and total account value with formatting to 2 decimal places
                 print(
                     f"\nTotal Interest Earned: ${interest:.2f}\n"
                     f"Total Account Value:   ${total:.2f}\n",
@@ -136,3 +137,40 @@ main()
 # docstrings instead of comments. I used the google style guide for python for
 # the docstrings.
 # https://google.github.io/styleguide/pyguide.html#383-functions-and-methods
+
+# -------------Output as comments-----------------
+# = RESTART: /home/tyler/Documents/MCC/COMS-170-PROGRAM/turn_in/Program5.py
+# **  Interest Value Calculator  **
+# C: Calculate Interest
+# D: Display Interest Information
+# X: Exit application
+# User Input: c
+
+# Enter the interest rate entered as a percentage, (e.g., enter 6 for 6% interest)
+# and the number of years the money will be invested.
+
+# Enter the amount of money (principal) you will be investing: $4200
+# Enter the annual interest rate (a value of 5 = 5% annual interest): 4
+# Enter the whole number of years you will be investing: 42
+
+# Total Interest Earned: $7056.00
+# Total Account Value:   $11256.00
+
+# **  Interest Value Calculator  **
+# C: Calculate Interest
+# D: Display Interest Information
+# X: Exit application
+# User Input: d
+
+# The simple interest formula is: Interest = Principal x Rate x Time
+# The Principal is the amount of money invested.
+# The Rate is the annual interest rate the money will earn.
+# The Time is the number of years the money will be invested for.
+
+# **  Interest Value Calculator  **
+# C: Calculate Interest
+# D: Display Interest Information
+# X: Exit application
+# User Input: x
+
+# HAL 9000: Daisy..Daisy..give me your answer do...

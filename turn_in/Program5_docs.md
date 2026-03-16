@@ -54,9 +54,9 @@
 | Input | Processing | Output |
 | ----- | ----- | ----- |
 | None | Prompt user for principal, rate, and years | interest, total\_account |
-|  | Call CalcInterest with principal, rate, and years |  |
-|  | Calculate total\_account from principal \+ interest |  |
-|  | Return interest and total\_account |  |
+| | Call CalcInterest with principal, rate, and years | |
+| | Calculate total\_account from principal \+ interest | |
+| | Return interest and total\_account | |
 
 **DisplayInfo:**
 
@@ -67,8 +67,8 @@
 **main:**
 
 | Input | Processing | Output |
-| ----- | ----- | ----- |
-| None | Loop until user enters "x" to exit | None |
+| ----- | ---------- | ------ |
+| None  | Loop until user enters "x" to exit | None |
 |  | Prompt user for menu choice (c, d, x) |  |
 |  | If "c", call TotalAccount and print interest and total account value |  |
 |  | If "d", call DisplayInfo to show info about interest formula |  |
