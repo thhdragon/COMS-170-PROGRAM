@@ -8,8 +8,8 @@
 # ----------------------------------------------------------------------------
 # Variable       Type        Purpose
 # ----------------------------------------------------------------------------
-# principal      int         amount of money to invest. user input
-# rate           int         interest rate % as a whole number. user input
+# principal      float       amount of money to invest. user input
+# rate           float       interest rate % as a whole number. user input
 # years          int         number of years to invest. user input
 # interest       float       amount of interest earned. calculated
 # total_account  float       total amount of money in the account. calculated
@@ -17,7 +17,7 @@
 # ----------------------------------------------------------------------------
 
 
-def CalcInterest(principal: int, rate: int, time: int) -> float:
+def CalcInterest(principal: float, rate: float, time: int) -> float:
     """Calculate interest from user input.
 
     Calculates interest by multiplying the principal, rate, and time.
@@ -58,8 +58,8 @@ def TotalAccount() -> tuple[float, float]:
     # casting an input() string to int will fail with ValueError if the string isn't valid numbers.
     # this should go into a try/except block but KISS for now. Exceptions are next unit.
     # also assuming that principal is an int not a float based on the test cases in the program pdf.
-    principal = int(input("Enter the amount of money (principal) you will be investing: $"))
-    rate = int(input("Enter the annual interest rate (a value of 5 = 5% annual interest): "))
+    principal = float(input("Enter the amount of money (principal) you will be investing: $"))
+    rate = float(input("Enter the annual interest rate (a value of 5 = 5% annual interest): "))
     years = int(input("Enter the whole number of years you will be investing: "))
 
     # calculate interest by passing principal, rate, and years to CalcInterest() and storing the
