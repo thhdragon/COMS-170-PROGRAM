@@ -10,25 +10,30 @@
 # --------------------------------------------------------------------------------
 # comp_times        list[float]   holds the completion times of the competitors
 # new_time          float         holds the new completion time entered by the user
-# time_str          str           holds the string representation of the completion time
-# result            float | None  holds the result of converting time_str to a float
+# time_as_str       str           holds the string representation of the completion time
+# result            float | None  holds the result of converting time_as_str to a float
 # fastest           float         holds the fastest completion time
 # slowest           float         holds the slowest completion time
 # average           float         holds the average completion time
+# idx               int           holds the index of the current element in the list
+# negative          float         holds the negative number check
+# not_finite        float         holds the non-finite number check
+# too_long          float         holds the too long check
+# time_as_float     float         holds the float representation of the completion time
 # --------------------------------------------------------------------------------
 from math import isfinite
 
 
-# function try_into_time (input: time from the input function (time_str)) (output: float on success | None on failure)
+# function try_into_time (input: time from the input function (time_as_str)) (output: float on success | None on failure)
 # use the None to orchestrate error handling in main
-def try_into_time(time_str: str) -> float | None:
+def try_into_time(time_as_str: str) -> float | None:
     """Try to convert a string into a valid time value, return None if it fails."""
     # open a try block because converting a string to a float can fail on non numeric characters (jump to except ValueError)
     try:
-        # cast time_str to a float and put value in time_float
-        time_float = float(time_str)
+        # cast time_as_str to a float and put value in time_as_float
+        time_as_float = float(time_as_str)
         # use a match statement to check for different conditions because it's more readable than a bunch of ifs
-        match time_float:
+        match time_as_float:
             # case to return -1.0 if the user enters -1 to compute the results
             case -1.0:
                 return -1.0
@@ -49,16 +54,16 @@ def try_into_time(time_str: str) -> float | None:
                 print("if you take over 11 days you don't get on the list")
                 return None
             # i cant think of any more conditions to check so if it makes it here its probably valid
-            # case to return the "hopefully valid" time_float
+            # case to return the "hopefully valid" time_as_float
             case _:
-                return time_float
+                return time_as_float
 
     # if the string can't be converted to a float (jump here)
     # ValueError is raised when the string can't be converted to a float
     # set custom behavior for ValueError exceptions
     # print invalid input back to user and return None
     except ValueError:
-        print(f"{time_str} is not a valid input")
+        print(f"{time_as_str} is not a valid input")
         return None
 
 
@@ -76,10 +81,10 @@ def main() -> None:
     new_time = 0.0
     # while loop to keep the program running until the user enters -1
     while new_time != -1.0:
-        # use input() to get the completion time and store it in time_str
-        time_str: str = input("Enter completion time (in seconds) or -1 to calculate results: ")
+        # use input() to get the completion time and store it in time_as_str
+        time_as_str: str = input("Enter completion time (in seconds) or -1 to calculate results: ")
         # call try_into_time() and put its reply in variable result
-        result: float | None = try_into_time(time_str)
+        result: float | None = try_into_time(time_as_str)
         # use a match statement to check for different conditions
         match result:
             # if try_into_time fails it returns None so skip to the next iteration
