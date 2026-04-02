@@ -21,6 +21,7 @@
 # --------------------------------------------------------------------------------
 from pathlib import Path
 
+
 # CalcTotal function takes no arguments and returns two floats or None on error
 def CalcTotal() -> tuple[float, float] | None:
     """Calculate grand total and average sale amount.
@@ -49,7 +50,6 @@ def CalcTotal() -> tuple[float, float] | None:
                 line_cleaned: str = line.strip()
                 # I don't know if I should be expecting you to mess with the cards.txt
                 # add a check to make sure there isn't a blank line in the file
-                # python EAFP isnt really my style so LBYL
                 if not line_cleaned:
                     # if so continue to the next line
                     continue
@@ -108,10 +108,10 @@ def DisplayCardSales() -> None:
             for line in file:
                 # clean the line
                 line_cleaned: str = line.strip()
-                # again lets LBYL look before you leap
+                # check again
                 # if the line is not empty
                 if not line_cleaned:
-                    # continue to the next line
+                    # continue to the next line in the file
                     continue
                 # convert the cleaned line to a float
                 price: float = float(line_cleaned)
@@ -120,7 +120,7 @@ def DisplayCardSales() -> None:
                 # print the line number and the price
                 print(f"{idx}: ${price:.2f}")
 
-    # blocks to jump to if an error occurs
+    # blocks to jump to if an error occurs. None is used for orchestration in main
     # FileNotFoundError is raised if the file is not found
     except FileNotFoundError as err:
         # print the error
@@ -129,7 +129,9 @@ def DisplayCardSales() -> None:
         return
     # ValueError is raised if the line entry is not a float
     except ValueError as err:
+        # print the error
         print(f"Error, check your file contents.\n{err}")
+        # return None
         return
 
 
@@ -185,3 +187,19 @@ def main() -> None:
 
 main()
 # =========Comments/Explanation of code from outside the lectures=========
+# I do a lot of independent learning and as I commented above I used a few of the more modern
+# patterns for handling files and . This week added the requirement of handling errors in our
+# programs so I read through the official Python docs which went over getting a handle to the
+# exception object in the except block and printing it to get more information about the error.
+# I'm used to using Err(e) in rust to get a handle (e) to the error message so the concept wasn't
+# new and the syntax was easy just using the `as` keyword to set an alias.
+# The docs on files also recommend pathlib and using `with` to open files in modern Python.
+
+# I wasn't sure how defensive to be because I didn't want to go too far ahead of where we are in
+# class but I was also concerned about losing points. I assume you aren't going to change the
+# cards.txt contents but I made a wrong assumption last assignment and lost points so this might be
+# a little overboard. I added a guard in the loops to skip blank lines in the cards.txt file and not
+# throw an ValueError exception from trying to cast "" to float. I know erroring on a blank line in
+# the file wouldn't have been "wrong" but silently skipping a blank line in the file seemed like the
+# right way to handle it because if there are more lines (the for loop is still iterating), a blank
+# line isn't a reason to crash a function like this.
