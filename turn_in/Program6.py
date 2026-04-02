@@ -142,9 +142,9 @@ def main() -> None:
     """Display a menu of choices to the user.
 
     Menu choices are:
-    C: Calculate Total and Average
+    C: Calculate Total and Average Sales
     D: Display Sales
-    X: Exit application
+    X: Exit
 
     The menu is displayed until the user enters 'x' to exit the application.
     """
@@ -155,7 +155,7 @@ def main() -> None:
         # print the menu
         print(
             f"{'-' * 28}\n*    Pokemon Card Sales    *\n{'-' * 28}\n"
-            "C: Calculate Total and Average\nD: Display Sales\nX: Exit application\n",
+            "C: Calculate Total and Average Sales\nD: Display Sales\nX: Exit\n",
         )
         # get user input and convert to lowercase so I don't have to check for both cases
         menu_selection = input("Enter menu selection: ").lower()
@@ -198,7 +198,7 @@ main()
 # new and the syntax was easy just using the `as` keyword to set an alias.
 # The docs on files also recommend pathlib and using `with` to open files in modern Python.
 # Python 3.10+ stuff I'm not all that concerned about unless a pretty nice QoL like the union type
-# on functions like Float | None, which is a lot nicer than using Optional[Float] from the typing
+# on functions like float | None, which is a lot nicer than using Optional[float] from the typing
 # module. But if it's a modern expected standard that's 10 years old now (3.4ish) it's a pattern I
 # want to learn and use and I don't mind the extra work.
 # I wasn't sure how defensive to be because I didn't want to go too far ahead of where we are in
