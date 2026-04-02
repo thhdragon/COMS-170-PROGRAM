@@ -142,8 +142,8 @@ def main() -> None:
     """Display a menu of choices to the user.
 
     Menu choices are:
-    D: Display Sales
     C: Calculate Total and Average
+    D: Display Sales
     X: Exit application
 
     The menu is displayed until the user enters 'x' to exit the application.
@@ -154,8 +154,8 @@ def main() -> None:
     while menu_selection != "x":
         # print the menu
         print(
-            "**********************\n* Pokemon Card Sales *\n**********************\n"
-            "D: Display Sales\nC: Calculate Total and Average\nX: Exit application\n",
+            f"{'-' * 28}\n*    Pokemon Card Sales    *\n{'-' * 28}\n"
+            "C: Calculate Total and Average\nD: Display Sales\nX: Exit application\n",
         )
         # get user input and convert to lowercase so I don't have to check for both cases
         menu_selection = input("Enter menu selection: ").lower()
@@ -179,7 +179,7 @@ def main() -> None:
                 continue
             # unpack response into total and average
             total, average = response
-            # print the total and average
+            # print the total and average formatted to 2 decimal places
             print(f"Total Sales: ${total:.2f}\nAverage Sale:  ${average:.2f}")
 
         # if the menu selection is D
@@ -197,7 +197,10 @@ main()
 # I'm used to using Err(e) in rust to get a handle (e) to the error message so the concept wasn't
 # new and the syntax was easy just using the `as` keyword to set an alias.
 # The docs on files also recommend pathlib and using `with` to open files in modern Python.
-
+# Python 3.10+ stuff I'm not all that concerned about unless a pretty nice QoL like the union type
+# on functions like Float | None, which is a lot nicer than using Optional[Float] from the typing
+# module. But if it's a modern expected standard that's 10 years old now (3.4ish) it's a pattern I
+# want to learn and use and I don't mind the extra work.
 # I wasn't sure how defensive to be because I didn't want to go too far ahead of where we are in
 # class but I was also concerned about losing points. I assume you aren't going to change the
 # cards.txt contents but I made a wrong assumption last assignment and lost points so this might be
@@ -207,6 +210,12 @@ main()
 # right way to handle it because if there are more lines (the for loop is still iterating), a blank
 # line isn't a reason to crash a function like this. I also added a guard to make sure the file
 # isn't empty because that would cause a ZeroDivisionError.
+# I understand the significance of showing opening the file "manually" by getting a handle to open
+# and then remembering to close it manually because like in C there is no `with`, its just fopen()
+# and making sure to fclose().
+# The None patterns I used are something I'm used to from rust because it's not far off from using
+# Option<T>.
+#
 # It didn't specify whether the program needed to be defensive against a file with different
 # contents but the post about error handling made it sound like it needed to be prepared for
 # anything. I hit all the scenario I can think of except using a dynamic path for the file.
