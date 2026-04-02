@@ -8,16 +8,16 @@
 # --------------------------------------------------------------------------------
 # Variable          Type                  Purpose
 # --------------------------------------------------------------------------------
-# price             float                 holds the price of a card read from the file
-# prices            float                 holds the total price of all cards read from the file
-# idx               int                   holds the number of cards read from the file
-# menu_selection    str                   holds the user's menu selection
-# total             float                 holds the total price of all cards read from the file
-# average           float                 holds the average price of all cards read from the file
-# line_cleaned      str                   holds the cleaned line read from the file, with whitespace removed
-# response          tuple[float, float]   holds the total and average prices
-# file              file                  holds the file object
-# err               Exception             holds the exception object
+# price             float                 price of a card read from the file
+# prices            float                 total price of all cards read from the file
+# idx               int                   number of cards read from the file
+# menu_selection    str                   user's menu selection
+# total             float                 total price of all cards read from the file
+# average           float                 average price of all cards read from the file
+# line_cleaned      str                   cleaned line read from the file with whitespace removed
+# response          tuple[float, float]   total and average prices
+# file              file                  file object
+# err               Exception             exception object
 # --------------------------------------------------------------------------------
 from pathlib import Path
 
@@ -78,8 +78,11 @@ def CalcTotal() -> tuple[float, float] | None:
         return None
 
     # catch ZeroDivisionError with LBYL look before you leap
-    # if idx is 0, the file is empty
-    if idx == 0:
+    # if the file is empty the index variable will never increment from 0
+    # thats a big problem because prices / idx will crash if idx is 0.
+    # if idx is 0, the file is empty. 0 is a "falsy" value in python for an int
+    # so check if idx is false aka empty
+    if not idx:
         # print the error
         print("The file is empty. Please add data to 'cards.txt'.")
         # return None
@@ -95,9 +98,8 @@ def DisplayCardSales() -> None:
     """Display scores for all items in the text file provided.
 
     Reads from a text file ('cards.txt') and displays each score with a
-    line number to the left starting at 1. Also handles file and value errors.
+    line number to the left starting at 1. Handles file and value errors.
     """
-    # sounded like you wanted this done manually instead of using enumerate() on a list
     # initialize idx
     idx: int = 0
     # opening a file can fail so use a try block
@@ -105,6 +107,7 @@ def DisplayCardSales() -> None:
         # use with to open the file
         with Path("cards.txt").open("r") as file:
             # iterate through the file by lines
+            # sounded like you wanted this done manually instead of using enumerate() on a list
             for line in file:
                 # clean the line
                 line_cleaned: str = line.strip()
@@ -124,7 +127,7 @@ def DisplayCardSales() -> None:
     # FileNotFoundError is raised if the file is not found
     except FileNotFoundError as err:
         # print the error
-        print(f"{err}: Ensure file is in the current working directory.")
+        print(f"{err}: Make sure the file is in the current working directory.")
         # return None
         return
     # ValueError is raised if the line entry is not a float
@@ -202,4 +205,16 @@ main()
 # throw an ValueError exception from trying to cast "" to float. I know erroring on a blank line in
 # the file wouldn't have been "wrong" but silently skipping a blank line in the file seemed like the
 # right way to handle it because if there are more lines (the for loop is still iterating), a blank
-# line isn't a reason to crash a function like this.
+# line isn't a reason to crash a function like this. I also added a guard to make sure the file
+# isn't empty because that would cause a ZeroDivisionError.
+# It didn't specify whether the program needed to be defensive against a file with different
+# contents but the post about error handling made it sound like it needed to be prepared for
+# anything. I hit all the scenario I can think of except using a dynamic path for the file.
+# Currently the program requires the cards.txt to be in the same directory as the current working
+# directory of the terminal. The code snippet that I saw to handle automatically loading the
+# cards.txt from same directory as the .py file looked like python magic I don't understand so I
+# don't think it's something that was expected in this program. Google search showed a snippet like
+# Get the directory where the script is located
+# script_dir = Path(__file__).resolve().parent
+# Build the path to your file
+# file_path = script_dir / "data.txt"
