@@ -8,66 +8,48 @@
 # --------------------------------------------------------------------------------
 # Variable          Type          Purpose
 # --------------------------------------------------------------------------------
-# comp_times        list[float]   holds the completion times of the competitors
-# new_time          float         holds the new completion time entered by the user
-# time_as_str       str           holds the string representation of the completion time
-# result            float | None  holds the result of converting time_as_str to a float
-# fastest           float         holds the fastest completion time
-# slowest           float         holds the slowest completion time
-# average           float         holds the average completion time
-# idx               int           holds the index of the current element in the list
-# negative          float         holds the negative number check
-# not_finite        float         holds the non-finite number check
-# too_long          float         holds the too long check
-# time_as_float     float         holds the float representation of the completion time
+# comp_times       list[float]   list of completion times entered by the user
+# time_as_str      str           current completion time as a string from user input
+# time_as_float    float         current completion time as a float after conversion
+# fastest          float         fastest completion time from the list
+# slowest          float         slowest completion time from the list
+# average          float         average completion time from the list
 # --------------------------------------------------------------------------------
 from math import isfinite
 
 
-# function try_into_time (input: time from the input function (time_as_str)) (output: float on success | None on failure)
 # use the None to orchestrate error handling in main
-def try_into_time(time_as_str: str) -> float | None:
-    """Try to convert a string into a valid time value, return None if it fails."""
-    # open a try block because converting a string to a float can fail on non numeric characters (jump to except ValueError)
-    try:
-        # cast time_as_str to a float and put value in time_as_float
-        time_as_float = float(time_as_str)
-        # use a match statement to check for different conditions because it's more readable than a bunch of ifs
-        match time_as_float:
-            # case to return -1.0 if the user enters -1 to compute the results
-            case -1.0:
-                return -1.0
-            # case to return None if the user enters a negative number
-            # check if input value is greater than or equal to 0
-            case negative if negative <= 0.0:
-                print("Completion time can't be 0 or negative")
-                return None
-            # case to return None if the user enters a non-finite number
-            # check if input value is not finite with the math.isfinite() function
-            # this safeguards against +- inf and nan
-            case not_finite if not isfinite(not_finite):
-                print("Completion time must be a finite number")
-                return None
-            # case to return None if the user enters a number longer than 999999.99
-            # need some sort of upper bound to prevent formatting issues
-            case too_long if too_long > 999999.99:
-                print("if you take over 11 days you don't get on the list")
-                return None
-            # i cant think of any more conditions to check so if it makes it here its probably valid
-            # case to return the "hopefully valid" time_as_float
-            case _:
-                return time_as_float
-
-    # if the string can't be converted to a float (jump here)
-    # ValueError is raised when the string can't be converted to a float
-    # set custom behavior for ValueError exceptions
-    # print invalid input back to user and return None
-    except ValueError:
-        print(f"{time_as_str} is not a valid input")
-        return None
+def time_str_to_float(time_as_str: str) -> float:
+    """Try to convert a string into a valid time value, can fail."""
+    # check if the input is an empty string
+    if time_as_str == "":
+        raise ValueError("Completion time can't be empty")
+    # cast time_as_str to a float and put value in time_as_float (can fail)
+    time_as_float = float(time_as_str)
+    # use a match statement to check for different conditions because it's easier to read
+    match time_as_float:
+        # case to return -1.0 if the user enters -1 to compute the results
+        case -1.0:
+            return -1.0
+        # case to error if the user enters a negative number
+        # check if input value is greater than or equal to 0
+        case negative if negative <= 0.0:
+            raise ValueError("Completion time can't be 0 or negative")
+        # case to error if the user enters a non-finite number
+        # check if input value is not finite with the math.isfinite() function
+        # this safeguards against +- inf and nan
+        case not_finite if not isfinite(not_finite):
+            raise ValueError("Completion time must be a finite number")
+        # case to error if the user enters a number longer than 999999.99
+        # need some sort of upper bound to prevent formatting issues
+        case too_long if too_long > 999999.99:
+            raise ValueError("if you take over 11 days you don't get on the list")
+        # i cant think of any more conditions to check so if it makes it here its probably valid
+        # case to return the "hopefully valid" time_as_float
+        case _:
+            return time_as_float
 
 
-# function main (input: no input) (output: None)
 def main() -> None:
     # print the title
     print(
@@ -76,30 +58,23 @@ def main() -> None:
         "<><><><><><><><><><><><><><><><><>\n\n"
         "Completion Time Information\n",
     )
-    # initialize variables comp_times and new_time outside the loop so they stay alive after the loop ends
+    # initialize variables outside the loop so they stay alive after the loop ends
     comp_times: list[float] = []
-    new_time = 0.0
+    time_as_float = 0.0
     # while loop to keep the program running until the user enters -1
-    while new_time != -1.0:
+    while time_as_float != -1.0:
         # use input() to get the completion time and store it in time_as_str
         time_as_str: str = input("Enter completion time (in seconds) or -1 to calculate results: ")
-        # call try_into_time() and put its reply in variable result
-        result: float | None = try_into_time(time_as_str)
-        # use a match statement to check for different conditions
-        match result:
-            # if try_into_time fails it returns None so skip to the next iteration
-            case None:
-                continue
-            # if try_into_time returns -1 set new_time to the returned value signaling quit
-            case -1.0:
-                new_time = result
-            # if try_into_time returns a valid number append it to the comp_times list
-            case _:
-                comp_times.append(result)
+        # call time_str_to_float() and put its reply in variable time_as_float (can fail)
+        try:
+            time_as_float: float = time_str_to_float(time_as_str)
+        except ValueError as err:
+            print(f"'{time_as_str}' is an invalid input: {err}")
+            continue
 
-    if not comp_times:
-        print("No completion times added, Exiting program.")
-        return
+        if time_as_float == -1:
+            continue
+        comp_times.append(time_as_float)
 
     fastest: float = min(comp_times)
     slowest: float = max(comp_times)
