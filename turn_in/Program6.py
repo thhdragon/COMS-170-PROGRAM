@@ -16,125 +16,109 @@
 # average           float                 average price of all cards read from the file
 # line_cleaned      str                   cleaned line read from the file with whitespace removed
 # response          tuple[float, float]   total and average prices
+# file_path         Path                  path to the file
 # file              file                  file object
 # err               Exception             exception object
 # --------------------------------------------------------------------------------
 from pathlib import Path
 
 
-# CalcTotal function takes no arguments and returns two floats or None on error
+# CalcTotal function takes no arguments and returns two floats or None on failure
 def CalcTotal() -> tuple[float, float] | None:
-    """Calculate grand total and average sale amount.
-
-    Reads the text file provided ('cards.txt'), accumulates a total,
-    and divides the total by the number of items in the file.
-
-    Returns:
-        grand total and the average sales amount, or None if an error occurs.
-
-    """
-    # initialize variables prices and idx
+    """Calculate grand total and average sale amount. Returns tuple on success, None on failure."""
+    # initialize prices to 0.0 and idx to 0
     prices: float = 0.0
     idx: int = 0
+    # use Path from pathlib to get a handle to the file path (preferred method in official docs)
+    file_path = Path("cards.txt")
     # opening a file can fail so use a try block
     try:
-        # use Path from pathlib to open the file (preferred method in official docs)
         # official docs recommend opening files with `with`
-        # `with` ensures `file` is closed automatically and cleans up on errors
-        with Path("cards.txt").open("r") as file:
-            # the iterator protocol on file objects reads one line at a time
+        # `with` makes sure `file` is closed automatically and cleans up on errors
+        # use the path handle to get a file handle by using the open method on file_path
+        # only need to read so open in read mode with "r"
+        with file_path.open("r") as file:
+            # the built in iterator for file objects reads one line at a time
             # so iterating through `file` reads one line at a time
             # use a for loop to iterate through the file
             for line in file:
-                # use .strip() to remove whitespace from the line
+                # strip whitespace from the current line and store in line_cleaned
                 line_cleaned: str = line.strip()
                 # I don't know if I should be expecting you to mess with the cards.txt
-                # add a check to make sure there isn't a blank line in the file
+                # use try block to convert the cleaned line to a float (can fail)
+                # if blank line
                 if not line_cleaned:
-                    # if so continue to the next line
+                    # if the line is blank, skip to the next iteration
                     continue
-                # convert the cleaned line to a float
-                # this isn't a simple test because isdigit() doesn't work for floats
-                # cast the cleaned line to a float and rely on the try block to catch errors
-                price: float = float(line_cleaned)
+                try:
+                    # cast cleaned line to float and store in price
+                    price: float = float(line_cleaned)
+                except ValueError:
+                    print(f"'{line_cleaned}' is not a valid number.")
+                    continue
                 # increment the number of cards read from the file by +1 each iteration
                 idx += 1
-                # add the price to the total
-                # shorthand for `prices = prices + price`
+                # add the price to the accumulated total
                 prices += price
 
-    # blocks to jump to if an error occurs
     # FileNotFoundError is raised if the file is not found
     except FileNotFoundError as err:
-        # print the error
-        print(err)
-        # return None
-        return None
-    # ValueError is raised if the line entry is not a float
-    except ValueError as err:
-        # print the error
-        print(f"Error, check your file contents.\n{err}")
+        # print the error message and a hint to fix it
+        # file is probably not in working directory
+        print(f"{err}: Make sure the file is in the current working directory.")
         # return None
         return None
 
-    # catch ZeroDivisionError with LBYL look before you leap
+    # calculate the average. (can fail if idx is 0)
     # if the file is empty the index variable will never increment from 0
-    # thats a big problem because prices / idx will crash if idx is 0.
-    # if idx is 0, the file is empty. 0 is a "falsy" value in python for an int
-    # so check if idx is false aka empty
-    if not idx:
-        # print the error
-        print("The file is empty. Please add data to 'cards.txt'.")
-        # return None
+    # can fail so use a try block
+    try:
+        # attempt to calculate average
+        average: float = prices / idx
+    # if idx is 0 catch the ZeroDivisionError and return None for main to use
+    except ZeroDivisionError:
+        print("Error: This should only happen if the file is empty. Check cards.txt.")
         return None
 
-    # calculate the average
-    average: float = prices / idx
     # return the total and average
     return prices, average
 
 
+# DisplayCardSales function takes no arguments and returns None
 def DisplayCardSales() -> None:
-    """Display scores for all items in the text file provided.
-
-    Reads from a text file ('cards.txt') and displays each score with a
-    line number to the left starting at 1. Handles file and value errors.
-    """
+    """Display scores for all items in the text file provided. Can fail."""
+    # reuses a lot from CalcTotal so I'll go lighter on the comments.
     # initialize idx
     idx: int = 0
-    # opening a file can fail so use a try block
+    # get a handle to the file path
+    file_path = Path("cards.txt")
+    # try block to catch file not found
     try:
-        # use with to open the file
-        with Path("cards.txt").open("r") as file:
-            # iterate through the file by lines
-            # sounded like you wanted this done manually instead of using enumerate() on a list
+        # open the file. call it file.
+        with file_path.open("r") as file:
+            # read through the file line by line with a for loop
             for line in file:
-                # clean the line
+                # strip whitespace from the current line and store in line_cleaned
                 line_cleaned: str = line.strip()
-                # check again
-                # if the line is not empty
-                if not line_cleaned:
-                    # continue to the next line in the file
+                # use try block to convert the cleaned line to a float (can fail)
+                try:
+                    # cast cleaned line to float and store in price
+                    price: float = float(line_cleaned)
+                # if the line isn't a valid number or is blank, print an error and skip to the next line
+                except ValueError:
+                    print(f"'{line_cleaned}' is not a valid number.")
                     continue
-                # convert the cleaned line to a float
-                price: float = float(line_cleaned)
                 # increment the number of cards read from the file by +1 each iteration
                 idx += 1
                 # print the line number and the price
                 print(f"{idx}: ${price:.2f}")
 
-    # blocks to jump to if an error occurs. None is used for orchestration in main
     # FileNotFoundError is raised if the file is not found
     except FileNotFoundError as err:
-        # print the error
+        # print the error message and a hint to fix it
+        # file is probably not in working directory
         print(f"{err}: Make sure the file is in the current working directory.")
-        # return None
-        return
-    # ValueError is raised if the line entry is not a float
-    except ValueError as err:
-        # print the error
-        print(f"Error, check your file contents.\n{err}")
-        # return None
+        # return early from the function
         return
 
 
@@ -154,7 +138,7 @@ def main() -> None:
     while menu_selection != "x":
         # print the menu
         print(
-            f"{'-' * 28}\n*    Pokemon Card Sales    *\n{'-' * 28}\n"
+            f"{'-' * 28}\n*   Pokemon Card Sales   *\n{'-' * 28}\n"
             "C: Calculate Total and Average Sales\nD: Display Sales\nX: Exit\n",
         )
         # get user input and convert to lowercase so I don't have to check for both cases
@@ -173,14 +157,14 @@ def main() -> None:
             response: tuple[float, float] | None = CalcTotal()
             # if the response is None
             if response is None:
-                # print the error
+                # print the error message and a hint to fix it
                 print("Try after addressing above errors")
                 # continue to the next iteration
                 continue
-            # unpack response into total and average
+            # response has two values inside. unpack into total and average
             total, average = response
             # print the total and average formatted to 2 decimal places
-            print(f"Total Sales: ${total:.2f}\nAverage Sale:  ${average:.2f}")
+            print(f"Total Sales: ${total:.2f}\nAverage Sale: ${average:.2f}")
 
         # if the menu selection is D
         elif menu_selection == "d":
