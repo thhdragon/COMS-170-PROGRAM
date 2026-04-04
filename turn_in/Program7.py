@@ -14,6 +14,10 @@
 # fastest          float         fastest completion time from the list
 # slowest          float         slowest completion time from the list
 # average          float         average completion time from the list
+# empty            str           error message for empty input
+# negative         str           error message for negative input
+# not_finite       str           error message for non-finite input
+# too_long         str           error message for input > 999999.99
 # --------------------------------------------------------------------------------
 from math import isfinite
 
@@ -23,31 +27,32 @@ def time_str_to_float(time_as_str: str) -> float:
     """Try to convert a string into a valid time value, can fail."""
     # check if the input is an empty string
     if time_as_str == "":
-        raise ValueError("Completion time can't be empty")
+        empty = "Completion time can't be empty"
+        raise ValueError(empty)
     # cast time_as_str to a float and put value in time_as_float (can fail)
     time_as_float = float(time_as_str)
     # use a match statement to check for different conditions because it's easier to read
-    match time_as_float:
-        # case to return -1.0 if the user enters -1 to compute the results
-        case -1.0:
-            return -1.0
-        # case to error if the user enters a negative number
-        # check if input value is greater than or equal to 0
-        case negative if negative <= 0.0:
-            raise ValueError("Completion time can't be 0 or negative")
-        # case to error if the user enters a non-finite number
-        # check if input value is not finite with the math.isfinite() function
-        # this safeguards against +- inf and nan
-        case not_finite if not isfinite(not_finite):
-            raise ValueError("Completion time must be a finite number")
-        # case to error if the user enters a number longer than 999999.99
-        # need some sort of upper bound to prevent formatting issues
-        case too_long if too_long > 999999.99:
-            raise ValueError("if you take over 11 days you don't get on the list")
-        # i cant think of any more conditions to check so if it makes it here its probably valid
-        # case to return the "hopefully valid" time_as_float
-        case _:
-            return time_as_float
+    # guard to return -1.0 if the user enters -1 to compute the results
+    if time_as_float == -1.0:
+        return -1.0
+    # guard to error if the user enters a negative number
+    # check if input value is greater than or equal to 0
+    if time_as_float <= 0.0:
+        negative = "Completion time can't be 0 or negative"
+        raise ValueError(negative)
+    # guard to error if the user enters a non-finite number
+    # check if input value is not finite with the math.isfinite() function
+    # this safeguards against +- inf and nan
+    if not isfinite(time_as_float):
+        not_finite = "Completion time must be a finite number"
+        raise ValueError(not_finite)
+    # guard to error if the user enters a number longer than 999999.99
+    # need some sort of upper bound to prevent formatting issues
+    if time_as_float > 999999.99:
+        too_long = "if you take over 11 days you don't get on the list"
+        raise ValueError(too_long)
+    # if it makes it here its probably valid
+    return time_as_float
 
 
 def main() -> None:

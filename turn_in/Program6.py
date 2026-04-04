@@ -104,7 +104,7 @@ def DisplayCardSales() -> None:
                 try:
                     # cast cleaned line to float and store in price
                     price: float = float(line_cleaned)
-                # if the line isn't a valid number or is blank, print an error and skip to the next line
+                # if line isn't a valid number or is blank, print an error and skip to the next line
                 except ValueError:
                     print(f"'{line_cleaned}' is not a valid number.")
                     continue
@@ -138,7 +138,7 @@ def main() -> None:
     while menu_selection != "x":
         # print the menu
         print(
-            f"{'-' * 28}\n*   Pokemon Card Sales   *\n{'-' * 28}\n"
+            f"{'-' * 26}\n*   Pokemon Card Sales   *\n{'-' * 26}\n"
             "C: Calculate Total and Average Sales\nD: Display Sales\nX: Exit\n",
         )
         # get user input and convert to lowercase so I don't have to check for both cases
@@ -173,18 +173,20 @@ def main() -> None:
 
 
 main()
-# =========Comments/Explanation of code from outside the lectures=========
+
+# Comments/Explanation of code from outside the lectures
 # I do a lot of independent learning and as I commented above I used a few of the more modern
-# patterns for handling files and . This week added the requirement of handling errors in our
-# programs so I read through the official Python docs which went over getting a handle to the
-# exception object in the except block and printing it to get more information about the error.
+# patterns for handling files. This week added the requirement of handling errors in our
+# programs so I read through some of the official Python docs which went over getting a handle to
+# the exception object in the except block and printing it to give more information about the error.
 # I'm used to using Err(e) in rust to get a handle (e) to the error message so the concept wasn't
 # new and the syntax was easy just using the `as` keyword to set an alias.
 # The docs on files also recommend pathlib and using `with` to open files in modern Python.
 # Python 3.10+ stuff I'm not all that concerned about unless a pretty nice QoL like the union type
-# on functions like float | None, which is a lot nicer than using Optional[float] from the typing
+# on functions like `float | None` which is a lot nicer than using Optional[float] from the typing
 # module. But if it's a modern expected standard that's 10 years old now (3.4ish) it's a pattern I
-# want to learn and use and I don't mind the extra work.
+# want to learn and practice and I don't mind the extra work.
+#
 # I wasn't sure how defensive to be because I didn't want to go too far ahead of where we are in
 # class but I was also concerned about losing points. I assume you aren't going to change the
 # cards.txt contents but I made a wrong assumption last assignment and lost points so this might be
@@ -205,9 +207,94 @@ main()
 # anything. I hit all the scenario I can think of except using a dynamic path for the file.
 # Currently the program requires the cards.txt to be in the same directory as the current working
 # directory of the terminal. The code snippet that I saw to handle automatically loading the
-# cards.txt from same directory as the .py file looked like python magic I don't understand so I
-# don't think it's something that was expected in this program. Google search showed a snippet like
+# cards.txt from same directory as the .py file used python dunder attribute magic we definitely
+# haven't covered yet so I don't think it's something that was expected in this program.
+# Google search showed a snippet like this
 # Get the directory where the script is located
 # script_dir = Path(__file__).resolve().parent
 # Build the path to your file
 # file_path = script_dir / "data.txt"
+
+# Add Output of final program as Comments
+
+# = RESTART: /home/tyler/Documents/MCC/COMS-170-PROGRAM/turn_in/Program6.py
+# --------------------------
+# *   Pokemon Card Sales   *
+# --------------------------
+# C: Calculate Total and Average Sales
+# D: Display Sales
+# X: Exit
+
+# Enter menu selection: c
+# Total Sales: $151.31
+# Average Sale: $2.80
+# --------------------------
+# *   Pokemon Card Sales   *
+# --------------------------
+# C: Calculate Total and Average Sales
+# D: Display Sales
+# X: Exit
+
+# Enter menu selection: d
+# 1: $2.85
+# 2: $4.09
+# 3: $1.19
+# 4: $2.58
+# 5: $0.70
+# 6: $1.39
+# 7: $2.57
+# 8: $4.39
+# 9: $2.68
+# 10: $4.43
+# 11: $3.05
+# 12: $1.99
+# 13: $1.88
+# 14: $4.83
+# 15: $1.48
+# 16: $2.79
+# 17: $0.11
+# 18: $2.41
+# 19: $1.64
+# 20: $3.64
+# 21: $2.05
+# 22: $4.34
+# 23: $0.48
+# 24: $4.21
+# 25: $4.55
+# 26: $3.68
+# 27: $4.63
+# 28: $2.92
+# 29: $0.67
+# 30: $2.81
+# 31: $2.47
+# 32: $1.57
+# 33: $3.35
+# 34: $0.27
+# 35: $4.87
+# 36: $0.80
+# 37: $4.47
+# 38: $4.76
+# 39: $3.34
+# 40: $0.20
+# 41: $3.12
+# 42: $3.09
+# 43: $2.98
+# 44: $1.30
+# 45: $4.69
+# 46: $4.84
+# 47: $4.31
+# 48: $2.80
+# 49: $0.51
+# 50: $4.19
+# 51: $4.00
+# 52: $3.57
+# 53: $3.20
+# 54: $1.58
+# --------------------------
+# *   Pokemon Card Sales   *
+# --------------------------
+# C: Calculate Total and Average Sales
+# D: Display Sales
+# X: Exit
+
+# Enter menu selection: x

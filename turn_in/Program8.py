@@ -8,7 +8,7 @@
 # Variable          Type          Purpose
 # --------------------------------------------------------------------------------
 # final_as_list     list[str]     holds the final list of sentences
-# test_input        str           holds the test input
+# text_from_user    str           holds the text from the user
 # sentences         list[str]     holds the list of sentences
 # sentence          str           holds the current sentence
 # sentence_clean    str           holds the cleaned sentence
@@ -29,8 +29,8 @@
 
 def main() -> None:
     final_as_list: list[str] = []
-    test_input: str = "my name is Samantha. i go to Mott Community College."
-    sentences: list[str] = test_input.split(".")
+    text_from_user: str = input("Enter your sentences: ")
+    sentences: list[str] = text_from_user.split(".")
 
     for sentence in sentences:
         sentence_clean: str = sentence.strip()
@@ -41,7 +41,7 @@ def main() -> None:
 
     final_as_str: str = ". ".join(final_as_list)
 
-    if test_input.endswith("."):
+    if text_from_user.endswith("."):
         print(f"{final_as_str}.")
     else:
         print(final_as_str)
