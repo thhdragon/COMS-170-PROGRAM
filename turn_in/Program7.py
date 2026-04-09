@@ -8,6 +8,7 @@
 # --------------------------------------------------------------------------------
 # Variable          Type          Purpose
 # --------------------------------------------------------------------------------
+# MAX_TIME         float         max completion time before it broke my formatting
 # comp_times       list[float]   list of completion times entered by the user
 # time_as_str      str           current completion time as a string from user input
 # time_as_float    float         current completion time as a float after conversion
@@ -21,7 +22,21 @@
 # --------------------------------------------------------------------------------
 from math import isfinite
 
-MAX_TIME = 999999.99
+# Requirements
+# Program written in Python containing:
+# a. An empty list that will contain float values of completion times.
+# b. A loop which gets input from user for completion times (in seconds). This loop continues until
+# the user enters -1.
+# c. While the loop iterates, the application adds the completion time to the list.
+# d. Upon termination of the loop, the application displays:
+#   i.   Fastest completion time formatted with two decimal places
+#   ii.  Slowest completion time formatted with two decimal places
+#   iii. Average completion time formatted with two decimal places
+# e. The application displays all of the completion times formatted with two decimal places.
+# f. Program is saved as Program7.py
+
+
+MAX_TIME: float = 999999.99
 
 
 # use the None to orchestrate error handling in main
