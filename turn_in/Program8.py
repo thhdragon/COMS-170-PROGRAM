@@ -26,10 +26,18 @@
 # e. Output of the final string.
 # f. Program is saved as Program8.py
 
+WELCOME: str = (
+    "--Sentence Capitalizer--\n"
+    "An example of input is: my name is Samantha. i go to Mott Community College.\n"
+    "The output would be: My name is Samantha. I go to Mott Community College.\n"
+)
+PROMPT: str = "Enter your sentences: \n"
+
 
 def main() -> None:
+    print(WELCOME)
     final_as_list: list[str] = []
-    text_from_user: str = input("Enter your sentences: ")
+    text_from_user: str = input(PROMPT)
     sentences: list[str] = text_from_user.split(".")
 
     for sentence in sentences:

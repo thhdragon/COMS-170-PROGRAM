@@ -21,6 +21,8 @@
 # --------------------------------------------------------------------------------
 from math import isfinite
 
+MAX_TIME = 999999.99
+
 
 # use the None to orchestrate error handling in main
 def time_str_to_float(time_as_str: str) -> float:
@@ -48,7 +50,7 @@ def time_str_to_float(time_as_str: str) -> float:
         raise ValueError(not_finite)
     # guard to error if the user enters a number longer than 999999.99
     # need some sort of upper bound to prevent formatting issues
-    if time_as_float > 999999.99:
+    if time_as_float > MAX_TIME:
         too_long = "if you take over 11 days you don't get on the list"
         raise ValueError(too_long)
     # if it makes it here its probably valid
@@ -63,7 +65,7 @@ def main() -> None:
         "<><><><><><><><><><><><><><><><><>\n\n"
         "Completion Time Information\n",
     )
-    # initialize variables outside the loop so they stay alive after the loop ends
+    # initialize variables outside the loop so they stay alive after through iterations
     comp_times: list[float] = []
     time_as_float = 0.0
     # while loop to keep the program running until the user enters -1
