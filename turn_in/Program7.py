@@ -47,8 +47,11 @@ def time_str_to_float(time_as_str: str) -> float:
         empty = "Completion time can't be empty"
         raise ValueError(empty)
     # cast time_as_str to a float and put value in time_as_float (can fail)
-    time_as_float = float(time_as_str)
-    # use a match statement to check for different conditions because it's easier to read
+    try:
+        time_as_float = float(time_as_str)
+    except ValueError as err:
+        not_a_number = "Completion time must be a number"
+        raise ValueError(not_a_number) from err
     # guard to return -1.0 if the user enters -1 to compute the results
     if time_as_float == -1.0:
         return -1.0
@@ -86,7 +89,9 @@ def main() -> None:
     # while loop to keep the program running until the user enters -1
     while time_as_float != -1.0:
         # use input() to get the completion time and store it in time_as_str
-        time_as_str: str = input("Enter completion time (in seconds) or -1 to calculate results: ")
+        time_as_str: str = input(
+            "Enter completion time (in seconds) or -1 to calculate results: ",
+        ).strip()
         # call time_str_to_float() and put its reply in variable time_as_float (can fail)
         try:
             time_as_float: float = time_str_to_float(time_as_str)
@@ -97,6 +102,20 @@ def main() -> None:
         if time_as_float == -1:
             continue
         comp_times.append(time_as_float)
+
+    # an empty list is a falsy value so check if comp_times is false
+    # list will be empty if user enters -1 (exit) on first prompt
+    # if false print a graceful shutdown message and continue exiting program
+    # min, max and sum would ValueError because of an empty iterable
+    # len(comp_times) would be 0 which would also be a ZeroDivisionError if it were possible.
+    # basically nothing else works with an empty list.
+    # There didnt really seem to be a point to hardcoding fallback 0.00 just to then have to nest
+    # everything in conditional checks to print the same error message and also an empty time table
+    # early return to skip the rest seemed much cleaner especially because printing an empty time
+    # table servers no purpose
+    if not comp_times:
+        print("There is nothing to show here.\nUser quit without adding any times.")
+        return
 
     fastest: float = min(comp_times)
     slowest: float = max(comp_times)
