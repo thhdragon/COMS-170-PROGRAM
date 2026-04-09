@@ -118,7 +118,6 @@ def parse_text(text: str, *, encrypted: bool) -> str:
         # if alpha and the upper char isnt in our cipher maps
         if char and char.upper() not in ALPHANUM_MAP:
             # append char as is
-            print(f"Not on the list {char}")
             parsed_list.append(char)
             # skip to next char
             continue
@@ -127,26 +126,26 @@ def parse_text(text: str, *, encrypted: bool) -> str:
             # treat alpha different because case
             # if char is alpha use the uppercase version to check the list else use as is
             idx = KEY_MAP.index(char.upper()) if char.isalpha() else KEY_MAP.index(char)
-            parsed_char: str = KEY_MAP[idx]
+            parsed_char: str = ALPHANUM_MAP[idx]
         else:
             # do the reverse from above
             idx = ALPHANUM_MAP.index(char.upper()) if char.isalpha() else ALPHANUM_MAP.index(char)
             parsed_char: str = KEY_MAP[idx]
 
-        append_to_list(parsed_char, parsed_list)
+        append_to_list(char, parsed_char, parsed_list)
 
     return "".join(parsed_list)
 
 
-def append_to_list(char: str, chars: list[str]) -> None:
+def append_to_list(char: str, parsed_char: str, chars: list[str]) -> None:
     is_upper = char.isupper()
     is_lower = char.islower()
     if is_upper:
-        chars.append(char.upper())
+        chars.append(parsed_char.upper())
     elif is_lower:
-        chars.append(char.lower())
+        chars.append(parsed_char.lower())
     else:
-        chars.append(char)
+        chars.append(parsed_char)
 
 
 def main() -> None:
