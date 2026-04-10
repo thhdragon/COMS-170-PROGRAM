@@ -15,10 +15,6 @@
 # fastest          float         fastest completion time from the list
 # slowest          float         slowest completion time from the list
 # average          float         average completion time from the list
-# empty            str           error message for empty input
-# negative         str           error message for negative input
-# not_finite       str           error message for non-finite input
-# too_long         str           error message for input > 999999.99
 # --------------------------------------------------------------------------------
 from math import isfinite
 
@@ -47,11 +43,13 @@ def time_str_to_float(time_as_str: str) -> float:
         empty = "Completion time can't be empty"
         raise ValueError(empty)
     # cast time_as_str to a float and put value in time_as_float (can fail)
+    # this one is special because it needs to catch the built in except before being able to
+    # re-raise it with a custom message. The default was fine I just cant leave things alone.
     try:
         time_as_float = float(time_as_str)
-    except ValueError as err:
+    except ValueError:
         not_a_number = "Completion time must be a number"
-        raise ValueError(not_a_number) from err
+        raise ValueError(not_a_number)
     # guard to return -1.0 if the user enters -1 to compute the results
     if time_as_float == -1.0:
         return -1.0
@@ -85,7 +83,7 @@ def main() -> None:
     )
     # initialize variables outside the loop so they stay alive after through iterations
     comp_times: list[float] = []
-    time_as_float = 0.0
+    time_as_float: float = 0.0
     # while loop to keep the program running until the user enters -1
     while time_as_float != -1.0:
         # use input() to get the completion time and store it in time_as_str
@@ -94,7 +92,7 @@ def main() -> None:
         ).strip()
         # call time_str_to_float() and put its reply in variable time_as_float (can fail)
         try:
-            time_as_float: float = time_str_to_float(time_as_str)
+            time_as_float = time_str_to_float(time_as_str)
         except ValueError as err:
             print(f"'{time_as_str}' is an invalid input: {err}")
             continue
@@ -128,8 +126,8 @@ def main() -> None:
         "All Competitor Times",
     )
     # basic list methods for indexing and array notation on the lists instead of enumerate()
-    for idx in range(len(comp_times)):
-        print(f"{idx + 1}: {comp_times[idx]:.2f} seconds")
+    for time in range(len(comp_times)):
+        print(f"{time + 1}: {comp_times[time]:.2f} seconds")
 
 
 main()
