@@ -131,3 +131,32 @@ def main() -> None:
 
 
 main()
+
+# Add Output of final program as Comments
+
+# ==== RESTART: /home/tyler/Documents/MCC/COMS-170-PROGRAM/turn_in/Program7.py ===
+# <><><><><><><><><><><><><><><><><>
+# <        MUCSOCS eSports         >
+# <><><><><><><><><><><><><><><><><>
+
+# Completion Time Information
+
+# Enter completion time (in seconds) or -1 to calculate results: 465.62
+# Enter completion time (in seconds) or -1 to calculate results: 485.915
+# Enter completion time (in seconds) or -1 to calculate results: 499.99
+# Enter completion time (in seconds) or -1 to calculate results: 2064.847
+# Enter completion time (in seconds) or -1 to calculate results: 503.76
+# Enter completion time (in seconds) or -1 to calculate results: 479.341
+# Enter completion time (in seconds) or -1 to calculate results: -1
+
+# Fastest completion time formatted with two decimal places: 465.62
+# Slowest completion time formatted with two decimal places: 2064.85
+# Average completion time formatted with two decimal places: 749.91
+
+# All Competitor Times
+# 1: 465.62 seconds
+# 2: 485.92 seconds
+# 3: 499.99 seconds
+# 4: 2064.85 seconds
+# 5: 503.76 seconds
+# 6: 479.34 seconds
