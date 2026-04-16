@@ -2,7 +2,7 @@
 # 0506760
 # Program 8
 # COMS-170-01: Winter 2026
-# Due: 05/06/26
+# Due: 04/17/26
 # Program description: takes a string of sentences and capitalizes the first letter of each sentence
 # --------------------------------------------------------------------------------
 # Variable          Type          Purpose
@@ -26,6 +26,7 @@
 # e. Output of the final string.
 # f. Program is saved as Program8.py
 
+# set a constant for the welcome message and prompt strings
 WELCOME: str = (
     "--Sentence Capitalizer--\n"
     "An example of input is: my name is Samantha. i go to Mott Community College.\n"
@@ -35,22 +36,38 @@ PROMPT: str = "Enter your sentences: \n"
 
 
 def main() -> None:
+    # print welcome message
     print(WELCOME)
+    # create an empty list
     final_as_list: list[str] = []
+    # get the sentence from the user
     text_from_user: str = input(PROMPT)
+    # split the sentence into a list of sentence strings by the period character
     sentences: list[str] = text_from_user.split(".")
 
+    # loop through the list of sentences
     for sentence in sentences:
+        # strip the sentence of whitespaces
         sentence_clean: str = sentence.strip()
 
+        # check if the sentence is empty
         if not sentence_clean:
+            # skip it if its empty
             continue
+        # append to the final list
+        # use array index notation to grab the char at index 0 and capitalize it
+        # use string slice notation to grab the string starting at index 1 to the end
+        # concatenate the two together and append to the final list
         final_as_list.append(sentence_clean[0].upper() + sentence_clean[1:])
 
+    # join the list of sentences together using '. ' as the separator
     final_as_str: str = ". ".join(final_as_list)
 
+    # check if the original text ends with a period
     if text_from_user.endswith("."):
+        # if it ends with a period add a period at the end when printing it
         print(f"{final_as_str}.")
+    # else print as is
     else:
         print(final_as_str)
 
