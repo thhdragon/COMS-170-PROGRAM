@@ -81,7 +81,7 @@ KEY_MAP: list[str] = [
 ]
 
 
-def menu_prompt() -> str | None:
+def menu_prompt() -> str:
     print("Main menu")
     print("Enter E for Encryption")
     print("Enter D for Decryption")
@@ -90,13 +90,17 @@ def menu_prompt() -> str | None:
     valid = ("e", "d", "x")
     choice: str = input("Please make a selection: ").strip().lower()
     if choice not in valid:
-        return None
+        invalid = "Invalid menu choice, please try again"
+        raise ValueError(invalid)
     return choice
 
 
 def encrypt() -> str:
     # get input
     plaintext_input: str = input("Please enter: ")
+    if plaintext_input == "":
+        empty = "Input can't be empty"
+        raise ValueError(empty)
     # encrypt text
     return parse_text(plaintext_input, encrypted=False)
 
@@ -104,7 +108,10 @@ def encrypt() -> str:
 def decrypt() -> str:
     # get input
     encrypted_input: str = input("Please enter: ")
-    # encrypt text
+    if encrypted_input == "":
+        empty = "Input can't be empty"
+        raise ValueError(empty)
+    # decrypt text
     return parse_text(encrypted_input, encrypted=True)
 
 
@@ -125,12 +132,12 @@ def parse_text(text: str, *, encrypted: bool) -> str:
         if encrypted:
             # treat alpha different because case
             # if char is alpha use the uppercase version to check the list else use as is
-            idx = KEY_MAP.index(char.upper()) if char.isalpha() else KEY_MAP.index(char)
+            idx: int = KEY_MAP.index(char.upper()) if char.isalpha() else KEY_MAP.index(char)
             parsed_char: str = ALPHANUM_MAP[idx]
         else:
             # do the reverse from above
             idx = ALPHANUM_MAP.index(char.upper()) if char.isalpha() else ALPHANUM_MAP.index(char)
-            parsed_char: str = KEY_MAP[idx]
+            parsed_char = KEY_MAP[idx]
 
         append_to_list(char, parsed_char, parsed_list)
 
@@ -150,19 +157,25 @@ def append_to_list(char: str, parsed_char: str, chars: list[str]) -> None:
 
 def main() -> None:
     print("Substitution Cipher Program")
-    while True:
-        menu_choice: str | None = menu_prompt()
-        if menu_choice is None:
+    menu_choice = ""
+    while menu_choice != "x":
+        try:
+            menu_choice: str = menu_prompt()
+        except ValueError as e:
+            print(e)
             continue
-        if menu_choice == "e":
-            encrypted: str = encrypt()
-            print(encrypted)
-        if menu_choice == "d":
-            plaintext: str = decrypt()
-            print(plaintext)
-        if menu_choice == "x":
-            print("quit")
-            break
+        try:
+            if menu_choice == "e":
+                encrypted: str = encrypt()
+                print(encrypted)
+            elif menu_choice == "d":
+                plaintext: str = decrypt()
+                print(plaintext)
+            elif menu_choice == "x":
+                print("quit")
+                return
+        except ValueError as e:
+            print(e)
 
 
 main()

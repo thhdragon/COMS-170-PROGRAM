@@ -2,7 +2,7 @@
 # 0506760
 # Program 7
 # COMS-170-01: Winter 2026
-# Due: 04/20/26
+# Due: 04/10/26
 # Program description: takes a list of completion times from user input and calculates
 # the fastest, slowest, and average completion times
 # --------------------------------------------------------------------------------
