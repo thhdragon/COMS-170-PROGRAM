@@ -1,3 +1,23 @@
+# Tyler Hill
+# 0506760
+# Final Project
+# COMS-170-01: Winter 2026
+# Due: 04/24/26
+# Program description: Encrypt and decrypt text using a substitution cipher
+# --------------------------------------------------------------------------------
+# Variable          Type          Purpose
+# --------------------------------------------------------------------------------
+# ALPHANUM_MAP      list[str]     map of characters to be used in the cipher
+# KEY_MAP           list[str]     map of characters to be used in the cipher
+# valid             tuple[str]    tuple of valid menu choices
+# choice            str           user's menu choice
+# plaintext_input   str           user's plaintext input
+# encrypted_input   str           user's encrypted input
+# parsed_list       list[str]     list of parsed characters
+# parsed_char       str           parsed character
+# --------------------------------------------------------------------------------
+
+# Alphabetical and numerical map
 # A B C D E F G H I J K L M N O P Q R S T U V W X Y Z . 1 2 3 4 5 6 7 8 9 0
 ALPHANUM_MAP: list[str] = [
     "A",  # 0
@@ -39,6 +59,7 @@ ALPHANUM_MAP: list[str] = [
     "0",  # 36
 ]
 
+# Key map for encryption/decryption
 # H 1 N V 7 B L 0 R I 3 F P 4 S U A X 2 E 8 O 9 G K 5 W C Q 6 J Y . D T Z M
 KEY_MAP: list[str] = [
     "H",  # 0
@@ -81,43 +102,62 @@ KEY_MAP: list[str] = [
 ]
 
 
+# Menu functions
 def menu_prompt() -> str:
-    print("Main menu")
-    print("Enter E for Encryption")
-    print("Enter D for Decryption")
-    print("Enter X to Quit")
+    """Print menu and get user input."""
+    # print menu options using escape characters
+    print("\t---Main menu---\nEnter E for Encryption\nEnter D for Decryption\nEnter X to Quit")
 
+    # intermediate variable for valid options
     valid = ("e", "d", "x")
+    # get choice from user, lowercase it, and strip leading/trailing whitespace
     choice: str = input("Please make a selection: ").strip().lower()
+    # check if the choice is not in the tuple of valid options
     if choice not in valid:
+        # if not in the tuple, raise ValueError with custom message
         invalid = "Invalid menu choice, please try again"
         raise ValueError(invalid)
+
+    # return choice if valid
     return choice
 
 
+# Function to encrypt text
 def encrypt() -> str:
+    """Encrypt the input text."""
     # get input
     plaintext_input: str = input("Please enter: ")
-    if plaintext_input == "":
+    # check for empty input
+    if not plaintext_input:
+        # if empty raise ValueError with custom message
         empty = "Input can't be empty"
         raise ValueError(empty)
-    # encrypt text
+
+    # encrypt text using helper function
     return parse_text(plaintext_input, encrypted=False)
 
 
+# Function to decrypt text
 def decrypt() -> str:
+    """Decrypt the input text."""
     # get input
     encrypted_input: str = input("Please enter: ")
-    if encrypted_input == "":
+    # check for empty input
+    if not encrypted_input:
+        # if empty raise ValueError with custom message
         empty = "Input can't be empty"
         raise ValueError(empty)
-    # decrypt text
+
+    # decrypt text using helper function
     return parse_text(encrypted_input, encrypted=True)
 
 
+# Helper function to parse text and encrypt or decrypt it
 def parse_text(text: str, *, encrypted: bool) -> str:
-    # go through each char in plaintext
+    """Parse the text and encrypt or decrypt it."""
+    # empty list to store parsed characters
     parsed_list: list[str] = []
+    # go through each char in plaintext
     for char in text:
         # lookup index of char in map
         # use that index in array notation in KEY_MAP
@@ -135,46 +175,72 @@ def parse_text(text: str, *, encrypted: bool) -> str:
             idx: int = KEY_MAP.index(char.upper()) if char.isalpha() else KEY_MAP.index(char)
             parsed_char: str = ALPHANUM_MAP[idx]
         else:
-            # do the reverse from above
+            # do the opposite of above
             idx = ALPHANUM_MAP.index(char.upper()) if char.isalpha() else ALPHANUM_MAP.index(char)
             parsed_char = KEY_MAP[idx]
-
+        # append the parsed character to the list
         append_to_list(char, parsed_char, parsed_list)
 
+    # return joined list
     return "".join(parsed_list)
 
 
+# Helper function to append the parsed character to the list
 def append_to_list(char: str, parsed_char: str, chars: list[str]) -> None:
-    is_upper = char.isupper()
-    is_lower = char.islower()
-    if is_upper:
+    """Append the parsed character to the list."""
+    if char.isupper():
         chars.append(parsed_char.upper())
-    elif is_lower:
+    elif char.islower():
         chars.append(parsed_char.lower())
     else:
         chars.append(parsed_char)
 
 
 def main() -> None:
-    print("Substitution Cipher Program")
+    """Print substitution cipher program menu and get user input."""
+    print(
+        "┌------------------------------┐\n"
+        "│ Substitution Cipher Program  │\n"
+        "└------------------------------┘",
+    )
+
     menu_choice = ""
+    # loops until user picks x
     while menu_choice != "x":
+        # try because menu_prompt can raise ValueError
         try:
+            # get user input from menu_prompt()
             menu_choice: str = menu_prompt()
+
+        # catch ValueError from menu_prompt()
         except ValueError as e:
+            # print error
             print(e)
+            # skip the rest of the loop and get next input
             continue
+
+        # try because encrypt() and decrypt() can raise ValueError
         try:
+            # call encrypt or decrypt based on user input
             if menu_choice == "e":
+                # call encrypt and store result
                 encrypted: str = encrypt()
+                # print result
                 print(encrypted)
             elif menu_choice == "d":
+                # call decrypt and store result
                 plaintext: str = decrypt()
+                # print plaintext
                 print(plaintext)
             elif menu_choice == "x":
-                print("quit")
+                # print quit message
+                print("Quitting...")
+                # return
                 return
+
+        # catch ValueError from encrypt() and decrypt() functions
         except ValueError as e:
+            # print error
             print(e)
 
 
