@@ -245,3 +245,64 @@ def main() -> None:
 
 
 main()
+
+# output as comments
+
+# = RESTART: /home/tyler/Documents/MCC/COMS-170-PROGRAM/turn_in/cipher.py
+# ┌------------------------------┐
+# │ Substitution Cipher Program  │
+# └------------------------------┘
+#         ---Main menu---
+# Enter E for Encryption
+# Enter D for Decryption
+# Enter X to Quit
+# Please make a selection: e
+# Please enter: HELLO
+# 07FFS
+#         ---Main menu---
+# Enter E for Encryption
+# Enter D for Decryption
+# Enter X to Quit
+# Please make a selection: d
+# Please enter: 07FFS
+# HELLO
+#         ---Main menu---
+# Enter E for Encryption
+# Enter D for Decryption
+# Enter X to Quit
+# Please make a selection: e
+# Please enter: hello
+# 07ffs
+#         ---Main menu---
+# Enter E for Encryption
+# Enter D for Decryption
+# Enter X to Quit
+# Please make a selection: e
+# Please enter: A1B2C3.
+# HC1QN6W
+#         ---Main menu---
+# Enter E for Encryption
+# Enter D for Decryption
+# Enter X to Quit
+# Please make a selection: e
+# Please enter: HELLO WORLD!
+# 07FFS 9SXFV!
+#         ---Main menu---
+# Enter E for Encryption
+# Enter D for Decryption
+# Enter X to Quit
+# Please make a selection: z
+# Invalid menu choice, please try again
+#         ---Main menu---
+# Enter E for Encryption
+# Enter D for Decryption
+# Enter X to Quit
+# Please make a selection: e
+# Please enter:
+# Input can't be empty
+#         ---Main menu---
+# Enter E for Encryption
+# Enter D for Decryption
+# Enter X to Quit
+# Please make a selection: x
+# Quitting...
